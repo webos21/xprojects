@@ -20,9 +20,11 @@ int test_fork() {
 	int npid = __fork();
 	if (npid == 0) {
 		printf("Parent Process!!!\n");
+		Sleep(3000);
 		return 0;
 	} else if (npid > 0) {
 		printf("Child Process!!! (pid=%d)\n", npid);
+		Sleep(1000);
 		return npid;
 	} else {
 		printf("error!!!!!!!!!\n");
@@ -31,8 +33,49 @@ int test_fork() {
 	return -1;
 }
 
+int test_exit_with_stack_teardown() {
+	int status = 0x3;
+	_exit_with_stack_teardown(NULL, 0, &status);
+	return 0;
+}
+
+static void *test_pthread(void *args) {
+	int x = (int) args;
+	printf("PThread - %d\n", x);
+	return NULL;
+}
+
+static int test_bthread(void *args) {
+	int x = (int) args;
+	printf("BThread - %d\n", x);
+	return x;
+}
+
+void __bionic_clone_entry( int (*fn)(void *), void *arg ) {
+	int ret = (*fn)(arg);
+	_exit_thread(ret);
+}
+
+int test__pthread_clone() {
+	int x = 333;
+	__pthread_clone(&test_pthread, NULL, 0, (void*)x);
+	return 0;
+}
+
+int test__bionic_clone() {
+	int x = 333;
+	__bionic_clone(0, NULL, NULL, NULL, NULL, &test_bthread, (void*)x);
+	return 0;
+}
+
 int main(int argc, char *argv[]) {
-	test_fork();
+	int i = 0;
+	int x = 0;
+
+	//test_fork();
+	test__pthread_clone();
+	//test__bionic_clone();
+	Sleep(1000);
 
 	return 0;
 }

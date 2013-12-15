@@ -53,9 +53,10 @@ ntsc_t *ntdll_getFP() {
 
 
 		/////////////////////
-		// Thread_Exit Functions
+		// Thread Functions
 		/////////////////////
 
+		_g_ntfp.FP_RtlCreateUserThread = dlsym(_g_ntdll, "RtlCreateUserThread");
 		_g_ntfp.FP_RtlExitUserThread = dlsym(_g_ntdll, "RtlExitUserThread");
 
 
@@ -82,6 +83,7 @@ ntsc_t *ntdll_getFP() {
 		/////////////////////
 
 		_g_ntfp.FP_RtlAllocateHeap = dlsym(_g_ntdll, "RtlAllocateHeap");
+		_g_ntfp.FP_RtlReAllocateHeap = dlsym(_g_ntdll, "RtlReAllocateHeap");
 		_g_ntfp.FP_RtlFreeHeap = dlsym(_g_ntdll, "RtlFreeHeap");
 		_g_ntfp.FP_RtlZeroMemory = dlsym(_g_ntdll, "RtlZeroMemory");
 		_g_ntfp.FP_RtlFillMemory = dlsym(_g_ntdll, "RtlFillMemory");
@@ -94,6 +96,22 @@ ntsc_t *ntdll_getFP() {
 #endif
 		_g_ntfp.FP_RtlMoveMemory = dlsym(_g_ntdll, "RtlMoveMemory");
 
+
+		/////////////////////
+		// Virtual Memory Functions
+		/////////////////////
+		_g_ntfp.FP_NtAllocateVirtualMemory = dlsym(_g_ntdll, "NtAllocateVirtualMemory");
+		_g_ntfp.FP_NtFlushVirtualMemory = dlsym(_g_ntdll, "NtFlushVirtualMemory");
+		_g_ntfp.FP_NtFreeVirtualMemory = dlsym(_g_ntdll, "NtFreeVirtualMemory");
+
+		_g_ntfp.FP_NtProtectVirtualMemory = dlsym(_g_ntdll, "NtProtectVirtualMemory");
+		_g_ntfp.FP_NtQueryVirtualMemory = dlsym(_g_ntdll, "NtQueryVirtualMemory");
+
+		_g_ntfp.FP_NtLockVirtualMemory = dlsym(_g_ntdll, "NtLockVirtualMemory");
+		_g_ntfp.FP_NtUnlockVirtualMemory = dlsym(_g_ntdll, "NtUnlockVirtualMemory");
+
+		_g_ntfp.FP_NtReadVirtualMemory = dlsym(_g_ntdll, "NtReadVirtualMemory");
+		_g_ntfp.FP_NtWriteVirtualMemory = dlsym(_g_ntdll, "NtWriteVirtualMemory");
 
 		/////////////////////
 		// String Functions

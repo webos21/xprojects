@@ -17,8 +17,6 @@
 #include <errno.h>
 #include <ntdll.h>
 
-void *Wmemset(void *s, int c, SIZE_T n) {
-	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_RtlFillMemory(s, n, c);
-	return s;
+int syscall(int number, ...) {
+
 }

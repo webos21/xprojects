@@ -29,6 +29,31 @@ int Wmemcmp(const void *s1, const void *s2, SIZE_T n);
 
 
 ////////////////////////
+// Bionic Functions
+////////////////////////
+
+void _exit_with_stack_teardown(void *stackBase, int stackSize, int *retCode);
+
+int  __pthread_clone(void* (*fn)(void*), void* tls, int flags, void* arg);
+int  __bionic_clone(unsigned long clone_flags,
+	void*         newsp,
+	int           *parent_tidptr,
+	void          *new_tls,
+	int           *child_tidptr,
+	int           (*fn)(void *),
+	void          *arg);
+
+int __futex_wait(volatile void *ftx, int val, const struct timespec *timeout);
+int __futex_wake(volatile void *ftx, int count);
+int __futex_syscall3(volatile void *ftx, int op, int count);
+int __futex_syscall4(volatile void *ftx, int op, int val, const struct timespec *timeout);
+
+int syscall(int number, ...);
+
+int vfork(void);
+
+
+////////////////////////
 // System-call Functions
 ////////////////////////
 

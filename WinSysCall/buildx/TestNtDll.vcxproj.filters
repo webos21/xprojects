@@ -66,10 +66,25 @@
     <ClCompile Include="..\src\syscalls\_exit_thread.c">
       <Filter>src\syscalls</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\bionic\__set_errno.c">
+    <ClCompile Include="..\src\bionic\clone.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\syscall.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\vfork.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\_exit_with_stack_teardown.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\futex_x86.c">
       <Filter>src\bionic</Filter>
     </ClCompile>
     <ClCompile Include="..\src\bionic\__errno.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\__set_errno.c">
       <Filter>src\bionic</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,8 +17,21 @@
 #include <errno.h>
 #include <ntdll.h>
 
-void *Wmemset(void *s, int c, SIZE_T n) {
-	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_RtlFillMemory(s, n, c);
-	return s;
+#define FUTEX_WAIT 0
+#define FUTEX_WAKE 1
+
+int __futex_wait(volatile void *ftx, int val, const struct timespec *timeout) {
+
+}
+
+int __futex_wake(volatile void *ftx, int count) {
+
+}
+
+int __futex_syscall3(volatile void *ftx, int op, int count) {
+
+}
+
+int __futex_syscall4(volatile void *ftx, int op, int val, const struct timespec *timeout) {
+
 }

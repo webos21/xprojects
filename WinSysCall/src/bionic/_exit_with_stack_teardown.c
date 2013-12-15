@@ -17,8 +17,11 @@
 #include <errno.h>
 #include <ntdll.h>
 
-void *Wmemset(void *s, int c, SIZE_T n) {
+void _exit_with_stack_teardown(void *stackBase, int stackSize, int *retCode) {
+	int status = (*retCode);
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_RtlFillMemory(s, n, c);
-	return s;
+
+	ntfp->FP_NtFreeVirtualMemory(NtCurrentProcess(), &stackBase, (PSIZE_T)&stackSize, 0);
+	errno = status;
+	ntfp->FP_RtlExitUserThread(status);
 }

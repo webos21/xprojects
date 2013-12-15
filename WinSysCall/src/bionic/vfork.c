@@ -17,8 +17,37 @@
 #include <errno.h>
 #include <ntdll.h>
 
-void *Wmemset(void *s, int c, SIZE_T n) {
+int vfork(void) {
+	NTSTATUS status;
+	SECURITY_ATTRIBUTES sa;
+	RTL_USER_PROCESS_INFORMATION *pi;
+
+	int pid = -1;
+
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_RtlFillMemory(s, n, c);
-	return s;
+
+	sa.nLength = sizeof sa;
+	sa.lpSecurityDescriptor = NULL;
+	sa.bInheritHandle = TRUE;
+
+	pi = ntfp->FP_RtlAllocateHeap(DRtlGetProcessHeap(ntfp), 0, 4096);
+	ntfp->FP_RtlZeroMemory(pi, 4096);
+
+	status = ntfp->FP_RtlCloneUserProcess(
+			RTL_CLONE_PROCESS_FLAGS_INHERIT_HANDLES
+					| RTL_CLONE_PROCESS_FLAGS_NO_SYNCHRONIZE, NULL, NULL, NULL,
+			pi);
+	switch (status) {
+	case STATUS_SUCCESS :
+		pid = 0;
+		errno = pid;
+		return pid;
+	case STATUS_PROCESS_CLONED:
+		pid = (int)pi->ClientId.UniqueProcess;
+		errno = pid;
+		return pid;
+	default:
+		errno = status;
+		return status;
+	}
 }

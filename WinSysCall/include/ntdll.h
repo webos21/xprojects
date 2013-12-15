@@ -170,6 +170,8 @@ typedef unsigned short     WORD;
 typedef unsigned long      DWORD;
 typedef void              *HANDLE;
 
+typedef HANDLE            *PHANDLE;
+
 #ifdef _WINDOWS_
 #pragma warning(push)
 #pragma warning(disable:4142)
@@ -413,6 +415,14 @@ typedef enum _PROCESSINFOCLASS {
   ProcessBreakOnTermination = 29
 } PROCESSINFOCLASS;
 
+typedef struct _IO_STATUS_BLOCK {
+	union {
+		NTSTATUS Status;
+		PVOID    Pointer;
+	};
+	ULONG_PTR Information;
+} IO_STATUS_BLOCK, *PIO_STATUS_BLOCK;
+
 typedef struct _RTL_DRIVE_LETTER_CURDIR {
   USHORT                    Flags;
   USHORT                    Length;
@@ -464,6 +474,20 @@ typedef struct _RTL_USER_PROCESS_INFORMATION {
   CLIENT_ID                 ClientId;
   SECTION_IMAGE_INFORMATION ImageInformation;
 } RTL_USER_PROCESS_INFORMATION, *PRTL_USER_PROCESS_INFORMATION;
+
+typedef struct _MEMORY_BASIC_INFORMATION {
+	PVOID                   BaseAddress;
+	PVOID                   AllocationBase;
+	ULONG                   AllocationProtect;
+	ULONG                   RegionSize;
+	ULONG                   State;
+	ULONG                   Protect;
+	ULONG                   Type;
+} MEMORY_BASIC_INFORMATION, *PMEMORY_BASIC_INFORMATION;
+
+typedef enum _MEMORY_INFORMATION_CLASS {
+	MemoryBasicInformation
+} MEMORY_INFORMATION_CLASS, *PMEMORY_INFORMATION_CLASS;
 
 typedef enum _SYSTEM_INFORMATION_CLASS {
 	SystemBasicInformation,
@@ -723,8 +747,21 @@ typedef struct _st_ntsc {
 		);
 
 	/////////////////////
-	// Thread_Exit Functions
+	// Thread Functions
 	/////////////////////
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCreateUserThread) (
+		__in     HANDLE               ProcessHandle,
+		__in_opt PSECURITY_DESCRIPTOR SecurityDescriptor,
+		__in     BOOLEAN              CreateSuspended,
+		__in     ULONG                StackZeroBits,
+		__inout  PULONG               StackReserved,
+		__inout  PULONG               StackCommit,
+		__in     PVOID                StartAddress,
+		__in_opt PVOID                StartParameter,
+		__out    PHANDLE              ThreadHandle,
+		__out    PCLIENT_ID           ClientID
+		);
 
 	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlExitUserThread) (
 		__in NTSTATUS ExitStatus
@@ -799,46 +836,128 @@ typedef struct _st_ntsc {
 	// Memory Functions
 	/////////////////////
 
-	NTSYSAPI_N PVOID (NTAPI *FP_RtlAllocateHeap)(
+	NTSYSAPI_N PVOID (NTAPI *FP_RtlAllocateHeap) (
 		__in      PVOID HeapHandle,
 		__in_opt  ULONG Flags,
 		__in      SIZE_T Size
 		);
 
-	NTSYSAPI_N BOOLEAN (NTAPI *FP_RtlFreeHeap)(
+	NTSYSAPI_N PVOID (NTAPI *FP_RtlReAllocateHeap) (
+		__in      PVOID HeapHandle,
+		__in_opt  ULONG Flags,
+		__in      PVOID MemoryPointer,
+		__in      SIZE_T Size
+		);
+
+	NTSYSAPI_N BOOLEAN (NTAPI *FP_RtlFreeHeap) (
 		__in      PVOID HeapHandle,
 		__in_opt  ULONG Flags,
 		__in      PVOID HeapBase
 		);
 
-	NTSYSAPI_N VOID (NTAPI *FP_RtlZeroMemory)(
+	NTSYSAPI_N VOID (NTAPI *FP_RtlZeroMemory) (
 		__out  PVOID Destination,
 		__in   SIZE_T Length
 		);
 
-	NTSYSAPI_N VOID (NTAPI *FP_RtlFillMemory)(
+	NTSYSAPI_N VOID (NTAPI *FP_RtlFillMemory) (
 		__out  PVOID Destination,
 		__in   SIZE_T Length,
 		__in   UCHAR Fill
 		);
 
-	NTSYSAPI_N SIZE_T (NTAPI *FP_RtlCompareMemory)(
+	NTSYSAPI_N SIZE_T (NTAPI *FP_RtlCompareMemory) (
 		__in  const VOID *Source1,
 		__in  const VOID *Source2,
 		__in  SIZE_T Length
 		);
 
-	NTSYSAPI_N VOID (NTAPI *FP_RtlCopyMemory)(
+	NTSYSAPI_N VOID (NTAPI *FP_RtlCopyMemory) (
 		__out  PVOID Destination,
 		__in   const PVOID Source,
 		__in   SIZE_T Length
 		);
 
-	NTSYSAPI_N VOID (NTAPI *FP_RtlMoveMemory)(
+	NTSYSAPI_N VOID (NTAPI *FP_RtlMoveMemory) (
 		__out  PVOID Destination,
 		__in   const PVOID Source,
 		__in   SIZE_T Length
 		);
+
+	/////////////////////
+	// Virtual Memory Functions
+	/////////////////////
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtAllocateVirtualMemory) (
+		__in     HANDLE     ProcessHandle,
+		__inout  PVOID     *BaseAddress,
+		__in     ULONG_PTR  ZeroBits,
+		__inout  PSIZE_T    RegionSize,
+		__in     ULONG      AllocationType,
+		__in     ULONG      Protect
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtFlushVirtualMemory) (
+		__in     HANDLE            ProcessHandle,
+		__inout  PVOID            *BaseAddress,
+		__inout  PSIZE_T           RegionSize,
+		__out    PIO_STATUS_BLOCK  IoStatus
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtFreeVirtualMemory) (
+		__in     HANDLE   ProcessHandle,
+		__inout  PVOID   *BaseAddress,
+		__inout  PSIZE_T  RegionSize,
+		__in     ULONG    FreeType
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtLockVirtualMemory) (
+		__in    HANDLE    ProcessHandle,
+		__in    PVOID    *BaseAddress,
+		__inout PULONG    NumberOfBytesToLock,
+		__in    ULONG     LockOption
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtProtectVirtualMemory) (
+		__in    HANDLE    ProcessHandle,
+		__inout PVOID    *BaseAddress,
+		__inout PULONG    NumberOfBytesToProtect,
+		__in    ULONG     NewAccessProtection,
+		__out   PULONG    OldAccessProtection
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtQueryVirtualMemory) (
+		__in      HANDLE                   ProcessHandle,
+		__in      PVOID                    BaseAddress,
+		__in      MEMORY_INFORMATION_CLASS MemoryInformationClass,
+		__out     PVOID                    Buffer,
+		__in      ULONG                    Length,
+		__out_opt PULONG                   ResultLength
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtReadVirtualMemory) (
+		__in      HANDLE    ProcessHandle,
+		__in      PVOID     BaseAddress,
+		__out     PVOID     Buffer,
+		__in      ULONG     NumberOfBytesToRead,
+		__out_opt PULONG    NumberOfBytesReaded
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtUnlockVirtualMemory) (
+		__in    HANDLE      ProcessHandle,
+		__in    PVOID      *BaseAddress,
+		__inout PULONG      NumberOfBytesToUnlock,
+		__in    ULONG       LockType
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtWriteVirtualMemory) (
+		__in      HANDLE    ProcessHandle,
+		__in      PVOID     BaseAddress,
+		__in      PVOID     Buffer,
+		__in      ULONG     NumberOfBytesToWrite,
+		__out_opt PULONG    NumberOfBytesWritten
+		);
+
 
 	/////////////////////
 	// String Functions
@@ -961,6 +1080,10 @@ typedef struct _st_ntsc {
 
 } ntsc_t;
 
+#define NtCurrentProcess() ( (HANDLE)(LONG_PTR) -1 )
+#define NtCurrentThread()  ( (HANDLE)(LONG_PTR) -2 )
+#define ZwCurrentProcess() NtCurrentProcess()
+#define ZwCurrentThread()  NtCurrentThread()
 #define DRtlGetProcessHeap(pFP) ((HANDLE)((pFP)->FP_RtlGetCurrentPeb()->ProcessHeap))
 
 

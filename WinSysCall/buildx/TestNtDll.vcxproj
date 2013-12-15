@@ -158,6 +158,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\bionic\clone.c" />
+    <ClCompile Include="..\src\bionic\futex_x86.c" />
+    <ClCompile Include="..\src\bionic\syscall.c" />
+    <ClCompile Include="..\src\bionic\vfork.c" />
+    <ClCompile Include="..\src\bionic\_exit_with_stack_teardown.c" />
     <ClCompile Include="..\src\bionic\__errno.c" />
     <ClCompile Include="..\src\bionic\__set_errno.c" />
     <ClCompile Include="..\src\dlfcn.c" />
