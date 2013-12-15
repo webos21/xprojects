@@ -158,12 +158,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\bionic\__errno.c" />
+    <ClCompile Include="..\src\bionic\__set_errno.c" />
     <ClCompile Include="..\src\dlfcn.c" />
     <ClCompile Include="..\src\ntdll.c" />
+    <ClCompile Include="..\src\string\bcopy_wrapper.c" />
+    <ClCompile Include="..\src\string\bzero_wrapper.c" />
+    <ClCompile Include="..\src\string\memcmp_wrapper.c" />
+    <ClCompile Include="..\src\string\memcpy_wrapper.c" />
+    <ClCompile Include="..\src\string\memmove_wrapper.c" />
+    <ClCompile Include="..\src\string\memset_wrapper.c" />
+    <ClCompile Include="..\src\syscalls\_exit.c" />
+    <ClCompile Include="..\src\syscalls\_exit_thread.c" />
+    <ClCompile Include="..\src\syscalls\__fork.c" />
     <ClCompile Include="..\src\test.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\asm-generic\errno-base.h" />
+    <ClInclude Include="..\include\asm-generic\errno.h" />
+    <ClInclude Include="..\include\asm\errno.h" />
     <ClInclude Include="..\include\dlfcn.h" />
+    <ClInclude Include="..\include\errno.h" />
+    <ClInclude Include="..\include\linux\compiler.h" />
+    <ClInclude Include="..\include\linux\err.h" />
+    <ClInclude Include="..\include\linux\errno.h" />
     <ClInclude Include="..\include\ntdll.h" />
     <ClInclude Include="..\include\ntstatus.h" />
     <ClInclude Include="..\include\poppack.h" />
@@ -173,6 +191,7 @@
     <ClInclude Include="..\include\pshpack8.h" />
     <ClInclude Include="..\include\sys\cdefs.h" />
     <ClInclude Include="..\include\sys\cdefs_elf.h" />
+    <ClInclude Include="..\include\test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

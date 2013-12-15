@@ -14,25 +14,11 @@
  * limitations under the License.
  */
 
-#include "test.h"
+#include <errno.h>
+#include <ntdll.h>
 
-int test_fork() {
-	int npid = __fork();
-	if (npid == 0) {
-		printf("Parent Process!!!\n");
-		return 0;
-	} else if (npid > 0) {
-		printf("Child Process!!! (pid=%d)\n", npid);
-		return npid;
-	} else {
-		printf("error!!!!!!!!!\n");
-		return npid;
-	}
-	return -1;
-}
-
-int main(int argc, char *argv[]) {
-	test_fork();
-
-	return 0;
+void *memmove(void *dest, const void *src, SIZE_T n) {
+	ntsc_t *ntfp = ntdll_getFP();
+	ntfp->FP_RtlMoveMemory(dest, (PVOID)src, n);
+	return dest;
 }

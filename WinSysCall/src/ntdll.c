@@ -26,6 +26,7 @@ ntsc_t *ntdll_getFP() {
 		_g_ntdll = dlopen("ntdll.dll", 0);
 		if (NULL == _g_ntdll) {
 			printf("cannot load [ntdll.dll]");
+			return NULL;
 		}
 
 		// mapping the [ntdll.dll] APIs

@@ -10,6 +10,24 @@
     <Filter Include="include\sys">
       <UniqueIdentifier>{73787d80-ed09-48c5-91d1-e7d5a7fb5605}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\asm">
+      <UniqueIdentifier>{ec064122-ce21-42c8-8af8-38050ec85e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\asm-generic">
+      <UniqueIdentifier>{4d650eb3-c0b7-4089-a9c7-0d8830651a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\linux">
+      <UniqueIdentifier>{d8514407-8a18-4fde-9f93-fb75fd101a82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\string">
+      <UniqueIdentifier>{e53fea65-a6bb-449a-8b0b-ebcfc3a92366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\syscalls">
+      <UniqueIdentifier>{ad0aac57-af1b-4d1e-9778-17dc1f1d3324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\bionic">
+      <UniqueIdentifier>{cd1bd6ec-a795-469e-aa95-c2f06b068f81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ntdll.c">
@@ -20,6 +38,39 @@
     </ClCompile>
     <ClCompile Include="..\src\dlfcn.c">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\string\bcopy_wrapper.c">
+      <Filter>src\string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\string\bzero_wrapper.c">
+      <Filter>src\string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\string\memcmp_wrapper.c">
+      <Filter>src\string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\string\memcpy_wrapper.c">
+      <Filter>src\string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\string\memmove_wrapper.c">
+      <Filter>src\string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\string\memset_wrapper.c">
+      <Filter>src\string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__fork.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\_exit.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\_exit_thread.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\__set_errno.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\__errno.c">
+      <Filter>src\bionic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +103,30 @@
     </ClInclude>
     <ClInclude Include="..\include\pshpack8.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\errno.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm-generic\errno.h">
+      <Filter>include\asm-generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm-generic\errno-base.h">
+      <Filter>include\asm-generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\compiler.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\err.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\test.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\errno.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\errno.h">
+      <Filter>include\linux</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

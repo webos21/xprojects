@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
-#include "test.h"
+#ifndef _TEST_H_
+#define _TEST_H_ 1
 
-int test_fork() {
-	int npid = __fork();
-	if (npid == 0) {
-		printf("Parent Process!!!\n");
-		return 0;
-	} else if (npid > 0) {
-		printf("Child Process!!! (pid=%d)\n", npid);
-		return npid;
-	} else {
-		printf("error!!!!!!!!!\n");
-		return npid;
-	}
-	return -1;
-}
+#include <ntdll.h>
 
-int main(int argc, char *argv[]) {
-	test_fork();
+////////////////////////
+// String Functions
+////////////////////////
 
-	return 0;
-}
+void *Wmemset(void *s, int c, SIZE_T n);
+void *Wmemcpy(void *dest, const void *src, SIZE_T n);
+int Wmemcmp(const void *s1, const void *s2, SIZE_T n);
+
+
+////////////////////////
+// System-call Functions
+////////////////////////
+
+void W_exit(int status);
+void _exit_thread(int status);
+
+int __fork(void);
+
+
+#endif // _TEST_H_
