@@ -16,21 +16,30 @@
 
 #include "test.h"
 
+void tsleep(int msec) {
+	LARGE_INTEGER x;
+	ntsc_t *ntfp = ntdll_getFP();
+	x.QuadPart = msec * -10000;
+	ntfp->FP_NtDelayExecution(FALSE, &x);
+}
+
 int test_fork() {
+	int cret = 0;
 	int npid = __fork();
-	if (npid == 0) {
-		printf("Parent Process!!!\n");
-		Sleep(3000);
+	if (npid > 0) {
+		printf("Parent Process!!! (child pid=%d)\n", npid);
+		wait4(npid, &cret, 0, NULL);
+		printf("result of child process = %d\n", cret);
 		return 0;
-	} else if (npid > 0) {
-		printf("Child Process!!! (pid=%d)\n", npid);
-		Sleep(1000);
-		return npid;
+	} else if (npid == 0) {
+		printf("Child Process!!!\n");
+		tsleep(3000);
+		W_exit(-3); // test : process return -3
+		return 0;   // for compiler's happyness
 	} else {
 		printf("error!!!!!!!!!\n");
 		return npid;
 	}
-	return -1;
 }
 
 int test_exit_with_stack_teardown() {
@@ -72,10 +81,10 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int x = 0;
 
-	//test_fork();
-	test__pthread_clone();
+	test_fork();
+	//test__pthread_clone();
 	//test__bionic_clone();
-	Sleep(1000);
+	//Sleep(1000);
 
 	return 0;
 }

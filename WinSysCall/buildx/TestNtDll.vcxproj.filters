@@ -87,6 +87,27 @@
     <ClCompile Include="..\src\bionic\__set_errno.c">
       <Filter>src\bionic</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\syscalls\__brk.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\_waitpid.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kernel32.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__waitid.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\wait4.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__sys_clone.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\execve.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ntdll.h">
@@ -142,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="..\include\linux\errno.h">
       <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\nttypes.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\kernel32.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -61,6 +61,8 @@ void W_exit(int status);
 void _exit_thread(int status);
 
 int __fork(void);
-
+int _waitpid(int pid, int *status, int options); // Not Used by wait.cpp
+int __waitid(int which, unsigned int id, void* info, int options, void* ru);
+int wait4(int pid, int *status, int options, void *ru);
 
 #endif // _TEST_H_

@@ -17,6 +17,7 @@
 #include <errno.h>
 #include <ntdll.h>
 
+// int  __pthread_clone(void* (*fn)(void*), void* tls, int flags, void* arg);
 int  __pthread_clone(void* (*fn)(void*), void* tls, int flags, void* arg)
 {
 	HANDLE hThd;
@@ -53,6 +54,15 @@ static void *__bionic_clone_fn(void *args) {
 	return NULL;
 }
 
+/*
+ * int  __bionic_clone(unsigned long clone_flags,
+ *                     void*         newsp,
+ *                     int           *parent_tidptr,
+ *                     void          *new_tls,
+ *                     int           *child_tidptr,
+ *                     int           (*fn)(void *),
+ *                     void          *arg);
+ */
 int  __bionic_clone(unsigned long clone_flags,
 	void*         newsp,
 	int           *parent_tidptr,

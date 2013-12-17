@@ -21,7 +21,7 @@ static void *_g_ntdll = NULL;
 static ntsc_t _g_ntfp;
 
 ntsc_t *ntdll_getFP() {
-	if (_g_ntdll == NULL ) {
+	if (NULL == _g_ntdll) {
 		// load the [ntdll.dll]
 		_g_ntdll = dlopen("ntdll.dll", 0);
 		if (NULL == _g_ntdll) {
@@ -46,10 +46,15 @@ ntsc_t *ntdll_getFP() {
 
 
 		/////////////////////
-		// Exit Functions
+		// Process Functions
 		/////////////////////
 
 		_g_ntfp.FP_RtlExitUserProcess = dlsym(_g_ntdll, "RtlExitUserProcess");
+
+		_g_ntfp.FP_NtWaitForSingleObject = dlsym(_g_ntdll, "NtWaitForSingleObject");
+
+		_g_ntfp.FP_NtOpenProcess = dlsym(_g_ntdll, "NtOpenProcess");
+		_g_ntfp.FP_NtClose = dlsym(_g_ntdll, "NtClose");
 
 
 		/////////////////////
@@ -58,6 +63,7 @@ ntsc_t *ntdll_getFP() {
 
 		_g_ntfp.FP_RtlCreateUserThread = dlsym(_g_ntdll, "RtlCreateUserThread");
 		_g_ntfp.FP_RtlExitUserThread = dlsym(_g_ntdll, "RtlExitUserThread");
+		_g_ntfp.FP_NtDelayExecution = dlsym(_g_ntdll, "NtDelayExecution");
 
 
 		/////////////////////

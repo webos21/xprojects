@@ -14,12 +14,24 @@
  * limitations under the License.
  */
 
-#include <errno.h>
-#include <ntdll.h>
+#include <kernel32.h>
+#include <dlfcn.h>
 
-int syscall(int number, ...) {
-	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("syscall is called, but it is not implemented!!!\n");
-	errno = 0;
-	return 0;
+static void *_g_k32dll = NULL;
+static k32sc_t _g_k32fp;
+
+k32sc_t *k32_getFP() {
+	if (NULL == _g_k32dll) {
+		// load the [kernel32.dll]
+		_g_k32dll = dlopen("kernel32.dll", 0);
+		if (NULL == _g_k32dll) {
+			printf("cannot load [kernel32.dll]");
+			return NULL;
+		}
+
+		// mapping the [kernel32.dll] APIs
+		//_g_k32fp.FP_GetExitCodeProcess = dlsym(_g_k32dll, "GetExitCodeProcess");
+
+	}
+	return &_g_k32fp;
 }

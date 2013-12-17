@@ -17,9 +17,10 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int syscall(int number, ...) {
-	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("syscall is called, but it is not implemented!!!\n");
+// pid_t waitpid(pid_t pid, int *status, int options)
+int _waitpid(int pid, int *status, int options) {
+	// This system call is not used!!!
+	// wait4 is called by wait.cpp
 	errno = 0;
 	return 0;
 }

@@ -17,9 +17,10 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int syscall(int number, ...) {
-	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("syscall is called, but it is not implemented!!!\n");
+// pid_t waitpid(pid_t pid, int *status, int options)
+int __sys_clone(void* (*fn)(void*), void* tls, int flags, void* arg) {
+	// This system call is not used!!!
+	// bionic/clone.S is used : __pthread_clone / __bionic_clone
 	errno = 0;
 	return 0;
 }
