@@ -17,9 +17,12 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+#define TINFO_SIZE	4096
+
+// pid_t gettid(void);
+int gettid(void) {
+	THREAD_BASIC_INFORMATION tinfo;
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
-	errno = 0;
-	return 0;
+	ntfp->FP_NtQueryInformationThread(NtCurrentThread(), ThreadBasicInformation, (PVOID)&tinfo, sizeof(tinfo), NULL);
+	return (int) tinfo.ClientId.UniqueThread;
 }

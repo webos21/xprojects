@@ -17,9 +17,10 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+//int getgroups(int size, gid_t list[]);
+int getgroups(int size, int list[]) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("getgroups() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }

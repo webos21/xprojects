@@ -17,9 +17,11 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+// sets the effective group ID
+// int setgid(gid_t gid);
+int setgid(int gid) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("setgid() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }

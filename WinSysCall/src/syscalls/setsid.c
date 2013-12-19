@@ -17,9 +17,11 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+// creates a new session
+// pid_t setsid(void);
+int setsid(void) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("setsid() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }

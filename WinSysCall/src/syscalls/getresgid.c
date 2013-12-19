@@ -17,9 +17,16 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+#define __GID    64
+
+// Get real GID
+//int getresgid(gid_t *rgid, gid_t *egid, gid_t *sgid); 
+int getresgid(int *rgid, int *egid, int *sgid) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("getresgid() is called, but it is not implemented!!!\n");
 	errno = 0;
+	(*rgid) = __GID;
+	(*egid) = __GID;
+	(*sgid) = __GID;
 	return 0;
 }

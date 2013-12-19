@@ -46,42 +46,11 @@ ntsc_t *ntdll_getFP() {
 
 
 		/////////////////////
-		// Process Functions
+		// Error Functions
 		/////////////////////
 
-		_g_ntfp.FP_RtlExitUserProcess = dlsym(_g_ntdll, "RtlExitUserProcess");
-
-		_g_ntfp.FP_NtWaitForSingleObject = dlsym(_g_ntdll, "NtWaitForSingleObject");
-
-		_g_ntfp.FP_NtOpenProcess = dlsym(_g_ntdll, "NtOpenProcess");
-		_g_ntfp.FP_NtClose = dlsym(_g_ntdll, "NtClose");
-
-
-		/////////////////////
-		// Thread Functions
-		/////////////////////
-
-		_g_ntfp.FP_RtlCreateUserThread = dlsym(_g_ntdll, "RtlCreateUserThread");
-		_g_ntfp.FP_RtlExitUserThread = dlsym(_g_ntdll, "RtlExitUserThread");
-		_g_ntfp.FP_NtDelayExecution = dlsym(_g_ntdll, "NtDelayExecution");
-
-
-		/////////////////////
-		// Fork Functions
-		/////////////////////
-
-		_g_ntfp.FP_RtlCreateProcessParameters = dlsym(_g_ntdll, "RtlCreateProcessParameters");
-		_g_ntfp.FP_RtlDestroyProcessParameters = dlsym(_g_ntdll, "RtlDestroyProcessParameters");
-		_g_ntfp.FP_RtlCreateUserProcess = dlsym(_g_ntdll, "RtlCreateUserProcess");
-
-		_g_ntfp.FP_CsrClientCallServer = dlsym(_g_ntdll, "CsrClientCallServer");
-
-		_g_ntfp.FP_NtQueryInformationProcess = dlsym(_g_ntdll, "NtQueryInformationProcess");
-
-		_g_ntfp.FP_RtlCloneUserProcess = dlsym(_g_ntdll, "RtlCloneUserProcess");
-
-		_g_ntfp.FP_RtlUpdateClonedCriticalSection = dlsym(_g_ntdll, "RtlUpdateClonedCriticalSection");
-		_g_ntfp.FP_RtlUpdateClonedSRWLock = dlsym(_g_ntdll, "RtlUpdateClonedSRWLock");
+		_g_ntfp.FP_RtlGetLastWin32Error = dlsym(_g_ntdll, "RtlGetLastWin32Error");
+		_g_ntfp.FP_RtlSetLastWin32Error = dlsym(_g_ntdll, "FP_RtlSetLastWin32Error");
 
 
 		/////////////////////
@@ -125,6 +94,7 @@ ntsc_t *ntdll_getFP() {
 
 		_g_ntfp.FP_RtlInitString = dlsym(_g_ntdll, "RtlInitString");
 		_g_ntfp.FP_RtlInitUnicodeString = dlsym(_g_ntdll, "RtlInitUnicodeString");
+		_g_ntfp.FP_RtlCreateUnicodeStringFromAsciiz = dlsym(_g_ntdll, "RtlCreateUnicodeStringFromAsciiz");
 
 		_g_ntfp.FP_RtlAnsiStringToUnicodeSize = dlsym(_g_ntdll, "RtlAnsiStringToUnicodeSize");
 		_g_ntfp.FP_RtlAnsiStringToUnicodeString = dlsym(_g_ntdll, "RtlAnsiStringToUnicodeString");
@@ -135,6 +105,12 @@ ntsc_t *ntdll_getFP() {
 		_g_ntfp.FP_RtlCopyString = dlsym(_g_ntdll, "RtlCopyString");
 		_g_ntfp.FP_RtlCopyUnicodeString = dlsym(_g_ntdll, "RtlCopyUnicodeString");
 
+		_g_ntfp.FP_RtlAppendAsciizToString = dlsym(_g_ntdll, "RtlAppendAsciizToString");
+		_g_ntfp.FP_RtlAppendStringToString = dlsym(_g_ntdll, "RtlAppendStringToString");
+		_g_ntfp.FP_RtlAppendUnicodeStringToString = dlsym(_g_ntdll, "RtlAppendUnicodeStringToString");
+		_g_ntfp.FP_RtlAppendUnicodeToString = dlsym(_g_ntdll, "RtlAppendUnicodeToString");
+		_g_ntfp.FP_RtlMultiAppendUnicodeStringBuffer = dlsym(_g_ntdll, "RtlMultiAppendUnicodeStringBuffer");
+
 		_g_ntfp.FP_RtlEqualString = dlsym(_g_ntdll, "RtlEqualString");
 		_g_ntfp.FP_RtlEqualUnicodeString = dlsym(_g_ntdll, "RtlEqualUnicodeString");
 
@@ -143,6 +119,8 @@ ntsc_t *ntdll_getFP() {
 
 		_g_ntfp.FP_RtlUpperString = dlsym(_g_ntdll, "RtlUpperString");
 		_g_ntfp.FP_RtlUpcaseUnicodeString = dlsym(_g_ntdll, "RtlUpcaseUnicodeString");
+		_g_ntfp.FP_RtlDowncaseUnicodeChar = dlsym(_g_ntdll, "RtlDowncaseUnicodeChar");
+		_g_ntfp.FP_RtlDowncaseUnicodeString = dlsym(_g_ntdll, "RtlDowncaseUnicodeString");
 
 		_g_ntfp.FP_RtlIntegerToChar = dlsym(_g_ntdll, "RtlIntegerToChar");
 		_g_ntfp.FP_RtlIntegerToUnicodeString = dlsym(_g_ntdll, "RtlIntegerToUnicodeString");
@@ -152,6 +130,67 @@ ntsc_t *ntdll_getFP() {
 
 		_g_ntfp.FP_RtlFreeAnsiString = dlsym(_g_ntdll, "RtlFreeAnsiString");
 		_g_ntfp.FP_RtlFreeUnicodeString = dlsym(_g_ntdll, "RtlFreeUnicodeString");
+
+
+		/////////////////////
+		// Environment Functions
+		/////////////////////
+
+		_g_ntfp.FP_RtlCreateEnvironment = dlsym(_g_ntdll, "RtlCreateEnvironment");
+		_g_ntfp.FP_RtlDestroyEnvironment = dlsym(_g_ntdll, "RtlDestroyEnvironment");
+		_g_ntfp.FP_RtlExpandEnvironmentStrings_U = dlsym(_g_ntdll, "RtlExpandEnvironmentStrings_U");
+		_g_ntfp.FP_RtlQueryEnvironmentVariable_U = dlsym(_g_ntdll, "RtlQueryEnvironmentVariable_U");
+		_g_ntfp.FP_RtlSetCurrentEnvironment = dlsym(_g_ntdll, "RtlSetCurrentEnvironment");
+		_g_ntfp.FP_RtlSetEnvironmentStrings = dlsym(_g_ntdll, "RtlSetEnvironmentStrings");
+		_g_ntfp.FP_RtlSetEnvironmentVariable = dlsym(_g_ntdll, "RtlSetEnvironmentVariable");
+
+
+		/////////////////////
+		// Process Functions
+		/////////////////////
+
+		_g_ntfp.FP_RtlCreateProcessParameters = dlsym(_g_ntdll, "RtlCreateProcessParameters");
+		_g_ntfp.FP_RtlDestroyProcessParameters = dlsym(_g_ntdll, "RtlDestroyProcessParameters");
+		_g_ntfp.FP_RtlCreateUserProcess = dlsym(_g_ntdll, "RtlCreateUserProcess");
+
+		_g_ntfp.FP_CsrClientCallServer = dlsym(_g_ntdll, "CsrClientCallServer");
+
+		_g_ntfp.FP_NtQueryInformationProcess = dlsym(_g_ntdll, "NtQueryInformationProcess");
+
+		_g_ntfp.FP_RtlCloneUserProcess = dlsym(_g_ntdll, "RtlCloneUserProcess");
+
+		_g_ntfp.FP_RtlUpdateClonedCriticalSection = dlsym(_g_ntdll, "RtlUpdateClonedCriticalSection");
+		_g_ntfp.FP_RtlUpdateClonedSRWLock = dlsym(_g_ntdll, "RtlUpdateClonedSRWLock");
+
+		_g_ntfp.FP_RtlExitUserProcess = dlsym(_g_ntdll, "RtlExitUserProcess");
+
+		_g_ntfp.FP_NtWaitForSingleObject = dlsym(_g_ntdll, "NtWaitForSingleObject");
+
+		_g_ntfp.FP_NtOpenProcess = dlsym(_g_ntdll, "NtOpenProcess");
+		_g_ntfp.FP_NtClose = dlsym(_g_ntdll, "NtClose");
+
+
+
+		/////////////////////
+		// Thread Functions
+		/////////////////////
+
+		_g_ntfp.FP_RtlCreateUserThread = dlsym(_g_ntdll, "RtlCreateUserThread");
+		_g_ntfp.FP_RtlExitUserThread = dlsym(_g_ntdll, "RtlExitUserThread");
+		_g_ntfp.FP_NtDelayExecution = dlsym(_g_ntdll, "NtDelayExecution");
+		_g_ntfp.FP_NtSuspendThread = dlsym(_g_ntdll, "NtSuspendThread");
+		_g_ntfp.FP_NtResumeThread = dlsym(_g_ntdll, "NtResumeThread");
+		_g_ntfp.FP_NtOpenThread = dlsym(_g_ntdll, "NtOpenThread");
+		_g_ntfp.FP_NtQueryInformationThread = dlsym(_g_ntdll, "NtQueryInformationThread");
+
+
+		/////////////////////
+		// PATH Functions
+		/////////////////////
+
+		_g_ntfp.FP_RtlDosPathNameToNtPathName_U = dlsym(_g_ntdll, "RtlDosPathNameToNtPathName_U");
+
+
 
 	}
 	return &_g_ntfp;

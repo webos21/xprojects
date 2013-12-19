@@ -61,8 +61,19 @@ void W_exit(int status);
 void _exit_thread(int status);
 
 int __fork(void);
+
 int _waitpid(int pid, int *status, int options); // Not Used by wait.cpp
 int __waitid(int which, unsigned int id, void* info, int options, void* ru);
 int wait4(int pid, int *status, int options, void *ru);
+
+int execve(const char *filename, char *const argv[], char *const envp[]);
+
+int __setuid(int uid);
+
+int gettid(void);
+
+int getppid(void);
+
+int kill(int pid, int sig);
 
 #endif // _TEST_H_

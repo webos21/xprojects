@@ -17,9 +17,10 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+// int __setuid(uid_t);
+int __setuid(int uid) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("__setuid() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }

@@ -39,7 +39,7 @@ int wait4(int pid, int *status, int options, void *ru) {
 	ntfp->FP_NtOpenProcess(&hpid, PROCESS_ALL_ACCESS, &oa, &cid);
 	ntfp->FP_NtWaitForSingleObject(hpid, FALSE, NULL); // timeout(NULL) : INFINITE
 	ntfp->FP_NtQueryInformationProcess(hpid, ProcessBasicInformation, &pbi, sizeof(pbi), NULL);
-	(*status) = pbi.ExitStatus;
+	(*status) = (int) pbi.ExitStatus;
 	ntfp->FP_NtClose(hpid);
 	errno = 0;
 	return 0;

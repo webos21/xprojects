@@ -77,14 +77,36 @@ int test__bionic_clone() {
 	return 0;
 }
 
+int test_execve() {
+	int ret;
+	char *const argv[] = {"C:\\Windows\\System32\\cmd.exe", "/?", NULL};
+	char *const envp[] = {"TEST=1", "LD_DIR=2", NULL};
+	ret = execve("C:\\Windows\\System32\\cmd.exe", argv, envp);
+}
+
+int test_gettid() {
+	int tid = gettid();
+	printf("tid = %d\n", tid);
+	return tid;
+}
+
+int test_getppid() {
+	int pid = getppid();
+	printf("parent pid = %d\n", pid);
+	return pid;
+}
+
 int main(int argc, char *argv[]) {
 	int i = 0;
 	int x = 0;
 
-	test_fork();
+	//test_fork();
 	//test__pthread_clone();
 	//test__bionic_clone();
 	//Sleep(1000);
+	//test_execve();
+	//test_gettid();
+	test_getppid();
 
 	return 0;
 }

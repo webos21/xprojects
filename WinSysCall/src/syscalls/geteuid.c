@@ -17,9 +17,13 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+#define __EUID    64
+
+// Get effective UID
+// uid_t geteuid(void);
+int geteuid(void) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("geteuid() is called, but it is not implemented!!!\n");
 	errno = 0;
-	return 0;
+	return __EUID;
 }

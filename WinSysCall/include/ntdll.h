@@ -132,6 +132,36 @@ typedef enum _PROCESSINFOCLASS {
   ProcessBreakOnTermination = 29
 } PROCESSINFOCLASS;
 
+typedef struct _THREAD_BASIC_INFORMATION {
+	NTSTATUS                ExitStatus;
+	PVOID                   TebBaseAddress;
+	CLIENT_ID               ClientId;
+	KAFFINITY               AffinityMask;
+	KPRIORITY               Priority;
+	KPRIORITY               BasePriority;	
+} THREAD_BASIC_INFORMATION, *PTHREAD_BASIC_INFORMATION;
+
+typedef enum _THREAD_INFORMATION_CLASS {
+	ThreadBasicInformation,
+	ThreadTimes,
+	ThreadPriority,
+	ThreadBasePriority,
+	ThreadAffinityMask,
+	ThreadImpersonationToken,
+	ThreadDescriptorTableEntry,
+	ThreadEnableAlignmentFaultFixup,
+	hreadEventPair,
+	ThreadQuerySetWin32StartAddress,
+	ThreadZeroTlsCell,
+	ThreadPerformanceCount,
+	ThreadAmILastThread,
+	ThreadIdealProcessor,
+	ThreadPriorityBoost,
+	ThreadSetTlsArrayAddress,
+	ThreadIsIoPending,
+	ThreadHideFromDebugger
+} THREAD_INFORMATION_CLASS, *PTHREAD_INFORMATION_CLASS;
+
 typedef struct _IO_STATUS_BLOCK {
 	union {
 		NTSTATUS Status;
@@ -441,6 +471,7 @@ typedef struct _st_ntsc {
 	/////////////////////
 	NTSYSAPI_N PPEB_VISTA_7 (NTAPI *FP_RtlGetCurrentPeb)(void);
 
+
 	/////////////////////
 	// Debug Functions
 	/////////////////////
@@ -449,126 +480,27 @@ typedef struct _st_ntsc {
 		__in  LPCSTR Format,
 		__in  ...
 		);
+	
+
+	/////////////////////
+	// Error Functions
+	/////////////////////
+
+	NTSYSAPI_N DWORD (NTAPI *FP_RtlGetLastWin32Error) (void);
+	
+	NTSYSAPI_N void (NTAPI *FP_RtlSetLastWin32Error) (
+		DWORD err
+		);
 
 
 	/////////////////////
-	// Process Functions
+	// CloseHandle Functions : NtOpenProcess / NtOpenThread
 	/////////////////////
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlExitUserProcess) (
-		__in NTSTATUS ExitStatus
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtWaitForSingleObject) (
-		__in  HANDLE Handle,
-		__in  BOOLEAN Alertable,
-		__in  PLARGE_INTEGER Timeout
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtOpenProcess) (
-		__out     PHANDLE ProcessHandle,
-		__in      ACCESS_MASK DesiredAccess,
-		__in      POBJECT_ATTRIBUTES ObjectAttributes,
-		__in_opt  PCLIENT_ID ClientId
-		);
 
 	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtClose) (
-		__in  HANDLE Handle
+		__in      HANDLE Handle
 		);
 
-
-	/////////////////////
-	// Thread Functions
-	/////////////////////
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCreateUserThread) (
-		__in     HANDLE               ProcessHandle,
-		__in_opt PSECURITY_DESCRIPTOR SecurityDescriptor,
-		__in     BOOLEAN              CreateSuspended,
-		__in     ULONG                StackZeroBits,
-		__inout  PULONG               StackReserved,
-		__inout  PULONG               StackCommit,
-		__in     PVOID                StartAddress,
-		__in_opt PVOID                StartParameter,
-		__out    PHANDLE              ThreadHandle,
-		__out    PCLIENT_ID           ClientID
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlExitUserThread) (
-		__in NTSTATUS ExitStatus
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtDelayExecution) (
-		__in BOOLEAN              Alertable,
-		__in PLARGE_INTEGER       DelayInterval // 100-us
-		);
-
-
-	/////////////////////
-	// Fork Functions
-	/////////////////////
-
-	NTSYSAPI_N NTSTATUS  (NTAPI *FP_RtlCreateProcessParameters) (
-		__out PRTL_USER_PROCESS_PARAMETERS *pProcessParameters,
-		__in PUNICODE_STRING ImagePathName,
-		__in_opt PUNICODE_STRING DllPath,
-		__in_opt PUNICODE_STRING CurrentDirectory,
-		__in_opt PUNICODE_STRING CommandLine,
-		__in_opt PVOID Environment,
-		__in_opt PUNICODE_STRING WindowTitle,
-		__in_opt PUNICODE_STRING DesktopInfo,
-		__in_opt PUNICODE_STRING ShellInfo,
-		__in_opt PUNICODE_STRING RuntimeData
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlDestroyProcessParameters) (
-		__in PRTL_USER_PROCESS_PARAMETERS *pProcessParameters
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCreateUserProcess) (
-		__in PUNICODE_STRING  ImageFileName,
-		__in ULONG  Attributes,
-		__inout PRTL_USER_PROCESS_PARAMETERS  ProcessParameters,
-		__in_opt PSECURITY_DESCRIPTOR ProcessSecurityDescriptor,
-		__in_opt PSECURITY_DESCRIPTOR ThreadSecurityDescriptor,
-		__in_opt HANDLE ParentProcess,
-		__in BOOLEAN  InheritHandles,
-		__in_opt HANDLE DebugPort,
-		__in_opt HANDLE ExceptionPort,
-		__out PRTL_USER_PROCESS_INFORMATION  ProcessInfo
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_CsrClientCallServer) (
-		__inout PVOID Message,
-		__inout PVOID Buffer,
-		__in ULONG Opcode,
-		__in ULONG BufferSize
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtQueryInformationProcess) (
-		__in       HANDLE ProcessHandle,
-		__in       PROCESSINFOCLASS ProcessInformationClass,
-		__out      PVOID ProcessInformation,
-		__in       ULONG ProcessInformationLength,
-		__out_opt  PULONG ReturnLength
-		);
-
-	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCloneUserProcess) (
-		__in ULONG ProcessFlags,
-		__in_opt PSECURITY_DESCRIPTOR ProcessSecurityDescriptor,
-		__in_opt PSECURITY_DESCRIPTOR ThreadSecurityDescriptor,
-		__in_opt HANDLE DebugPort,
-		__out PRTL_USER_PROCESS_INFORMATION ProcessInformation
-		);
-
-	NTSYSAPI_N VOID (NTAPI *FP_RtlUpdateClonedCriticalSection) (
-		__inout PRTL_CRITICAL_SECTION CriticalSection
-		);
-
-	NTSYSAPI_N VOID (NTAPI *FP_RtlUpdateClonedSRWLock) (
-		__inout PRTL_SRWLOCK SRWLock,
-		__in LOGICAL Shared // TRUE to set to shared acquire
-		);
 
 	/////////////////////
 	// Memory Functions
@@ -621,6 +553,7 @@ typedef struct _st_ntsc {
 		__in   const PVOID Source,
 		__in   SIZE_T Length
 		);
+
 
 	/////////////////////
 	// Virtual Memory Functions
@@ -718,6 +651,11 @@ typedef struct _st_ntsc {
 		__in   PCWSTR SourceString
 		);
 
+	NTSYSAPI_N BOOLEAN (NTAPI *FP_RtlCreateUnicodeStringFromAsciiz) (
+		__out PUNICODE_STRING  Destination,  
+		__in  PCSZ  Source  
+		);
+
 	NTSYSAPI_N ULONG (NTAPI *FP_RtlAnsiStringToUnicodeSize) (
 		 __in  PANSI_STRING AnsiString
 		);
@@ -746,6 +684,32 @@ typedef struct _st_ntsc {
 	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCopyUnicodeString) (
 		__out     PUNICODE_STRING DestinationString,
 		__in_opt  PCUNICODE_STRING SourceString
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlAppendAsciizToString) (
+		__inout PSTRING  Destination,  
+		__in    PCSZ  Source  
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlAppendStringToString) (
+		__inout  PSTRING Destination,
+		__in     const STRING *Source
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlAppendUnicodeStringToString) (
+		__inout  PUNICODE_STRING Destination,
+		__in     PCUNICODE_STRING Source
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlAppendUnicodeToString) (
+		__inout   PUNICODE_STRING Destination,
+		__in_opt  PCWSTR Source
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlMultiAppendUnicodeStringBuffer) ( 
+		__inout PRTL_UNICODE_STRING_BUFFER pStrBuffer, 
+		__in ULONG numAddends, 
+		__in PCUNICODE_STRING pAddends 
 		);
 
 	NTSYSAPI_N BOOLEAN (NTAPI *FP_RtlEqualString) (
@@ -783,6 +747,16 @@ typedef struct _st_ntsc {
 		__in     BOOLEAN AllocateDestinationString
 		);
 
+	NTSYSAPI_N WCHAR (NTAPI *FP_RtlDowncaseUnicodeChar) (
+		__in  WCHAR SourceCharacter
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlDowncaseUnicodeString) (
+		__inout PUNICODE_STRING DestinationString,
+		__in    PCUNICODE_STRING SourceString,
+		__in    BOOLEAN AllocateDestinationString
+		);
+
 	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlIntegerToChar) (
 		__in      ULONG  value,  
 		__in_opt  ULONG  base,  
@@ -814,6 +788,197 @@ typedef struct _st_ntsc {
 
 	NTSYSAPI_N VOID  (NTAPI *FP_RtlFreeUnicodeString) (
 		__inout  PUNICODE_STRING UnicodeString
+		);
+
+	
+	/////////////////////
+	// Environment Functions
+	/////////////////////
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCreateEnvironment) (
+		__in      BOOLEAN   Inherit,
+		__out     PVOID    *Environment
+		);
+
+	NTSYSAPI_N VOID (NTAPI *FP_RtlDestroyEnvironment) (
+		__in      PVOID     Environment
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlExpandEnvironmentStrings_U) (
+		__in_opt   PVOID               Environment,
+		__in       PUNICODE_STRING     SourceString,
+		__out      PUNICODE_STRING     DestinationString,
+		__out_opt  PULONG              DestinationBufferLength
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlQueryEnvironmentVariable_U) (
+		__in_opt   PVOID               Environment,
+		__in       PUNICODE_STRING     VariableName,
+		__out      PUNICODE_STRING     VariableValue
+		);
+		
+	NTSYSAPI_N VOID (NTAPI *FP_RtlSetCurrentEnvironment) (
+		__in      PVOID                NewEnvironment,
+		__out_opt PVOID               *OldEnvironment
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlSetEnvironmentStrings) (
+		__in      PWCHAR               NewEnvironment,
+		__in      ULONG                NewEnvironmentSize
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlSetEnvironmentVariable) (
+		__inout_opt PVOID             *Environment,
+		__in        PUNICODE_STRING    VariableName,
+		__in        PUNICODE_STRING    VariableValue
+		);
+
+
+	/////////////////////
+	// Process Functions
+	/////////////////////
+	
+	NTSYSAPI_N NTSTATUS  (NTAPI *FP_RtlCreateProcessParameters) (
+		__out PRTL_USER_PROCESS_PARAMETERS *pProcessParameters,
+		__in PUNICODE_STRING ImagePathName,
+		__in_opt PUNICODE_STRING DllPath,
+		__in_opt PUNICODE_STRING CurrentDirectory,
+		__in_opt PUNICODE_STRING CommandLine,
+		__in_opt PVOID Environment,
+		__in_opt PUNICODE_STRING WindowTitle,
+		__in_opt PUNICODE_STRING DesktopInfo,
+		__in_opt PUNICODE_STRING ShellInfo,
+		__in_opt PUNICODE_STRING RuntimeData
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlDestroyProcessParameters) (
+		__in PRTL_USER_PROCESS_PARAMETERS pProcessParameters
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCreateUserProcess) (
+		__in PUNICODE_STRING  ImageFileName,
+		__in ULONG  Attributes,
+		__inout PRTL_USER_PROCESS_PARAMETERS  ProcessParameters,
+	__in_opt PSECURITY_DESCRIPTOR ProcessSecurityDescriptor,
+		__in_opt PSECURITY_DESCRIPTOR ThreadSecurityDescriptor,
+		__in_opt HANDLE ParentProcess,
+		__in BOOLEAN  InheritHandles,
+		__in_opt HANDLE DebugPort,
+		__in_opt HANDLE ExceptionPort,
+		__out PRTL_USER_PROCESS_INFORMATION  ProcessInfo
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_CsrClientCallServer) (
+		__inout PVOID Message,
+		__inout PVOID Buffer,
+		__in ULONG Opcode,
+		__in ULONG BufferSize
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtQueryInformationProcess) (
+		__in       HANDLE ProcessHandle,
+		__in       PROCESSINFOCLASS ProcessInformationClass,
+		__out      PVOID ProcessInformation,
+		__in       ULONG ProcessInformationLength,
+		__out_opt  PULONG ReturnLength
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCloneUserProcess) (
+		__in ULONG ProcessFlags,
+		__in_opt PSECURITY_DESCRIPTOR ProcessSecurityDescriptor,
+		__in_opt PSECURITY_DESCRIPTOR ThreadSecurityDescriptor,
+		__in_opt HANDLE DebugPort,
+		__out PRTL_USER_PROCESS_INFORMATION ProcessInformation
+		);
+
+	NTSYSAPI_N VOID (NTAPI *FP_RtlUpdateClonedCriticalSection) (
+		__inout PRTL_CRITICAL_SECTION CriticalSection
+		);
+
+	NTSYSAPI_N VOID (NTAPI *FP_RtlUpdateClonedSRWLock) (
+		__inout PRTL_SRWLOCK SRWLock,
+		__in LOGICAL Shared // TRUE to set to shared acquire
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlExitUserProcess) (
+		__in NTSTATUS ExitStatus
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtWaitForSingleObject) (
+		__in  HANDLE Handle,
+		__in  BOOLEAN Alertable,
+		__in  PLARGE_INTEGER Timeout
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtOpenProcess) (
+		__out     PHANDLE ProcessHandle,
+		__in      ACCESS_MASK DesiredAccess,
+		__in      POBJECT_ATTRIBUTES ObjectAttributes,
+		__in_opt  PCLIENT_ID ClientId
+		);
+
+
+	/////////////////////
+	// Thread Functions
+	/////////////////////
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlCreateUserThread) (
+		__in     HANDLE               ProcessHandle,
+		__in_opt PSECURITY_DESCRIPTOR SecurityDescriptor,
+		__in     BOOLEAN              CreateSuspended,
+		__in     ULONG                StackZeroBits,
+		__inout  PULONG               StackReserved,
+		__inout  PULONG               StackCommit,
+		__in     PVOID                StartAddress,
+		__in_opt PVOID                StartParameter,
+		__out    PHANDLE              ThreadHandle,
+		__out    PCLIENT_ID           ClientID
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_RtlExitUserThread) (
+		__in NTSTATUS ExitStatus
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtDelayExecution) (
+		__in BOOLEAN              Alertable,
+		__in PLARGE_INTEGER       DelayInterval // 100-us
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtSuspendThread) (
+		__in      HANDLE          ThreadHandle,
+		__out_opt PULONG          PreviousSuspendCount
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtResumeThread) (
+		__in      HANDLE          ThreadHandle,
+		__out_opt PULONG          SuspendCount
+		);
+
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtOpenThread) (
+		__out  PHANDLE             ThreadHandle,
+		__in   ACCESS_MASK         DesiredAccess,
+		__in   POBJECT_ATTRIBUTES  ObjectAttributes,
+		__in   PCLIENT_ID          ClientId
+		);
+	
+	NTSYSAPI_N NTSTATUS (NTAPI *FP_NtQueryInformationThread) (
+		__in       HANDLE                    ThreadHandle,
+		__in       THREAD_INFORMATION_CLASS  ThreadInformationClass,
+		__inout    PVOID                     ThreadInformation,
+		__in       ULONG                     ThreadInformationLength,
+		__out_opt  PULONG                    ReturnLength
+		);
+
+
+	/////////////////////
+	// PATH Functions
+	/////////////////////
+
+	NTSYSAPI_N BOOLEAN (NTAPI *FP_RtlDosPathNameToNtPathName_U) (
+		__in PCWSTR DosName,
+		__out PUNICODE_STRING NtName,
+		__out_opt PCWSTR* DosFilePath,
+		__out_opt PUNICODE_STRING NtFilePath
 		);
 
 } ntsc_t;

@@ -17,9 +17,16 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+#define __UID    64
+
+// Get real GID
+//int getresuid(uid_t *ruid, uid_t *euid, uid_t *suid);
+int getresuid(int *ruid, int *euid, int *suid) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("getresuid() is called, but it is not implemented!!!\n");
 	errno = 0;
+	(*ruid) = __UID;
+	(*euid) = __UID;
+	(*suid) = __UID;
 	return 0;
 }

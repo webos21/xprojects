@@ -17,9 +17,11 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+// sets the real GID, effective GID, and saved set-group-ID 
+// int setresgid(gid_t rgid, gid_t egid, gid_t sgid);
+int setresgid(int rgid, int egid, int sgid) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("setresgid() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }

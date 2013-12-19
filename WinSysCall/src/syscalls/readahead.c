@@ -17,9 +17,10 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+//ssize_t readahead(int fd, off64_t offset, size_t count);
+SSIZE_T readahead(int fd, LONGLONG offset, SIZE_T count) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("readahead() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }

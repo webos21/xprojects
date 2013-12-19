@@ -17,9 +17,14 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+// Get parent process ID 
+// pid_t getppid(void);
+int getppid(void) {
+	PROCESS_BASIC_INFORMATION pbi;
+
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+
+	ntfp->FP_NtQueryInformationProcess(NtCurrentProcess(), ProcessBasicInformation, &pbi, sizeof(pbi), NULL);
 	errno = 0;
-	return 0;
+	return (int) pbi.InheritedFromUniqueProcessId;
 }

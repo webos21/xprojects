@@ -17,9 +17,11 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+// sets real and effective user IDs
+// int setreuid(uid_t ruid, uid_t euid);
+int __setreuid(int ruid, int euid) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("__setreuid() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }

@@ -28,6 +28,12 @@
     <Filter Include="src\bionic">
       <UniqueIdentifier>{cd1bd6ec-a795-469e-aa95-c2f06b068f81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\syscalls-unimp">
+      <UniqueIdentifier>{19193f68-ac63-47dd-92ce-db912550f065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\syscalls-notused">
+      <UniqueIdentifier>{f72a0715-c1f6-4a14-9d7e-85dd5c13daf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ntdll.c">
@@ -87,25 +93,82 @@
     <ClCompile Include="..\src\bionic\__set_errno.c">
       <Filter>src\bionic</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\syscalls\__brk.c">
-      <Filter>src\syscalls</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\syscalls\_waitpid.c">
-      <Filter>src\syscalls</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\kernel32.c">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\syscalls\__waitid.c">
-      <Filter>src\syscalls</Filter>
     </ClCompile>
     <ClCompile Include="..\src\syscalls\wait4.c">
       <Filter>src\syscalls</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\syscalls\__sys_clone.c">
+    <ClCompile Include="..\src\syscalls\execve.c">
       <Filter>src\syscalls</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\syscalls\execve.c">
+    <ClCompile Include="..\src\syscalls\gettid.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__brk.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__setuid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__sys_clone.c">
+      <Filter>src\syscalls-notused</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__waitid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\_waitpid.c">
+      <Filter>src\syscalls-notused</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getegid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\geteuid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getgid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getresgid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getresuid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getuid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getpgid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getppid.c">
+      <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getsid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\getgroups.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\readahead.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\setsid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\setgid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__setreuid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__setresuid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\setresgid.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\kill.c">
       <Filter>src\syscalls</Filter>
     </ClCompile>
   </ItemGroup>

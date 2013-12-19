@@ -66,6 +66,7 @@ typedef int                NTSTATUS;
 #define __out_opt                          __allowed(on_parameter)
 
 #define __inout                            __allowed(on_parameter)
+#define __inout_opt                        __allowed(on_parameter)
 
 #define __field_bcount_part(size,init)     __allowed(on_field)
 #endif // __ATTR_SAL
@@ -206,6 +207,8 @@ typedef VOID              *LPVOID;
 typedef unsigned short     WCHAR;
 typedef WCHAR             *PWCHAR,*LPWCH,*PWCH;
 
+typedef WCHAR             *NWPSTR, *LPWSTR, *PWSTR;
+
 typedef UCHAR              BOOLEAN;    // winnt
 typedef BOOLEAN           *PBOOLEAN;   // winnt
 
@@ -229,16 +232,32 @@ typedef ACCESS_MASK       *PACCESS_MASK;
 typedef ULONG_PTR          DWORD_PTR, *PDWORD_PTR;
 typedef ULONG_PTR          SIZE_T, *PSIZE_T;
 
+typedef LONG_PTR           SSIZE_T, *PSSIZE_T;
+
 typedef CHAR              *NPSTR, *LPSTR, *PSTR;
 typedef CONST char        *PCSZ;
 typedef CONST WCHAR       *LPCWSTR, *PCWSTR;
 typedef CHAR              *PCHAR, *LPCH, *PCH;
 typedef CONST CHAR        *LPCSTR, *PCSTR;
 
+typedef LONG               KPRIORITY;
+
 
 //////////////////////////////////////////
 // Structured Types
 //////////////////////////////////////////
+
+//////////////
+// RTL_BUFFER
+//////////////
+typedef struct _RTL_BUFFER {
+	PUCHAR    Buffer;
+	PUCHAR    StaticBuffer;
+	SIZE_T    Size;
+	SIZE_T    StaticSize;
+	SIZE_T    ReservedForAllocatedSize; // for future doubling
+	PVOID     ReservedForIMalloc; // for future pluggable growth
+} RTL_BUFFER, *PRTL_BUFFER;
 
 //////////////
 // ANSI_STRING
@@ -265,6 +284,15 @@ typedef struct _UNICODE_STRING {
 } UNICODE_STRING, *PUNICODE_STRING;
 typedef const UNICODE_STRING *PCUNICODE_STRING;
 #define UNICODE_NULL ((WCHAR)0) // winnt
+
+//////////////
+// UNICODE_STRING_BUFFER
+//////////////
+typedef struct _RTL_UNICODE_STRING_BUFFER {
+	UNICODE_STRING String;
+	RTL_BUFFER     ByteBuffer;
+	UCHAR          MinimumStaticBufferForTerminalNul[sizeof(WCHAR)];
+} RTL_UNICODE_STRING_BUFFER, *PRTL_UNICODE_STRING_BUFFER;
 
 //////////////
 // WINNT : LIST_ENTRY, RTL_CRITICAL_SECTION, RTL_SRWLOCK, LARGE_INTEGER, ULARGE_INTEGER

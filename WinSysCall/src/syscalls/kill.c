@@ -17,9 +17,11 @@
 #include <errno.h>
 #include <ntdll.h>
 
-int __brk(void* end_data) {
+// send any signal to any process group or process
+// int kill(pid_t pid, int sig);
+int kill(int pid, int sig) {
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_DbgPrint("__brk() is called, but it is not implemented!!!\n");
+	ntfp->FP_DbgPrint("kill() is called, but it is not implemented!!!\n");
 	errno = 0;
 	return 0;
 }
