@@ -34,6 +34,9 @@
     <Filter Include="src\syscalls-notused">
       <UniqueIdentifier>{f72a0715-c1f6-4a14-9d7e-85dd5c13daf6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\machine">
+      <UniqueIdentifier>{f166d12b-acf8-4142-b581-c8d10b002d41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ntdll.c">
@@ -168,8 +171,29 @@
     <ClCompile Include="..\src\syscalls\setresgid.c">
       <Filter>src\syscalls-unimp</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\syscalls\tkill.c">
+      <Filter>src\syscalls-notused</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\tgkill.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\syscalls\kill.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__ptrace.c">
+      <Filter>src\syscalls-unimp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\syscalls\__set_thread_area.c">
       <Filter>src\syscalls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\__get_tls.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bionic\__set_tls.c">
+      <Filter>src\bionic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pthread.c">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +255,123 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\kernel32.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\ptrace.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\ptrace-abi.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\ptrace.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\posix_types.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\posix_types_32.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\types.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\posix_types.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\types.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sys\types.h">
+      <Filter>include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\machine\kernel.h">
+      <Filter>include\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\stddef.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\stdint.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sys\_types.h">
+      <Filter>include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\machine\_types.h">
+      <Filter>include\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sys\sysmacros.h">
+      <Filter>include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\stddef.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\ldt.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\unistd.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\unistd_32.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\unistd.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sys\ptrace.h">
+      <Filter>include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\limits.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\pthread.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sched.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\signal.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\string.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\time.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sys\limits.h">
+      <Filter>include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sys\syslimits.h">
+      <Filter>include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\machine\internal_types.h">
+      <Filter>include\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\machine\limits.h">
+      <Filter>include\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\page.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\page_32.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sys\time.h">
+      <Filter>include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\siginfo.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm-generic\siginfo.h">
+      <Filter>include\asm-generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm\signal.h">
+      <Filter>include\asm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\asm-generic\signal.h">
+      <Filter>include\asm-generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\malloc.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

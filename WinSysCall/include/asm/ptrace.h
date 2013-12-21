@@ -16,33 +16,34 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef __LINUX_COMPILER_H
-#define __LINUX_COMPILER_H
+#ifndef _ASM_X86_PTRACE_H
+#define _ASM_X86_PTRACE_H
+#include <linux/compiler.h>
+#include <asm/ptrace-abi.h>
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #ifndef __ASSEMBLY__
-#define __user
+struct pt_regs {
+ long ebx;
+ long ecx;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __kernel
-#define __safe
-#define __force
-#define __nocast
+ long edx;
+ long esi;
+ long edi;
+ long ebp;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __iomem
-#define __chk_user_ptr(x) (void)0
-#define __chk_io_ptr(x) (void)0
-// modified by cmjo for windows compiler {
-//#define __builtin_warning(x,y...) (1)
-#define __builtin_warning(x, ...) (1)
-// }
+ long eax;
+ int xds;
+ int xes;
+ int xfs;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __acquires(x)
-#define __releases(x)
-#define __acquire(x) (void)0
-#define __release(x) (void)0
+ long orig_eax;
+ long eip;
+ int xcs;
+ long eflags;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __cond_lock(x) (x)
+ long esp;
+ int xss;
+};
 #endif
-#ifndef __attribute_const__
-#define __attribute_const__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#endif
 #endif

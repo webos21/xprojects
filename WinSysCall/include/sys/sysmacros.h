@@ -25,13 +25,34 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-#include <errno.h>
+#ifndef _SYS_SYSMACROS_H_
+#define _SYS_SYSMACROS_H_
 
-#define TLS_SLOT_ERRNO 2
+/* some rogue code includes this file directly :-( */
+#ifndef _SYS_TYPES_H_
+# include <sys/types.h>
+#endif
 
-extern void* __get_tls(void);
+// modified by cmjo {
+#ifndef __inline__
+#define __inline__ __forceinline
+#endif
+// }
 
-volatile int*  __errno( void )
+static __inline__ int major(dev_t _dev)
 {
-  return  &((volatile int*)__get_tls())[TLS_SLOT_ERRNO];
+  return (_dev >> 8) & 0xfff;
 }
+
+static __inline__ int minor(dev_t _dev)
+{
+  return (_dev & 0xff) | ((_dev >> 12) & 0xfff00);
+}
+
+static __inline__ dev_t makedev(int __ma, int __mi)
+{
+  return ((__ma & 0xfff) << 8) | (__mi & 0xff) | ((__mi & 0xfff00) << 12);
+}
+
+#endif /* _SYS_SYSMACROS_H_ */
+

@@ -16,33 +16,29 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef __LINUX_COMPILER_H
-#define __LINUX_COMPILER_H
-#ifndef __ASSEMBLY__
-#define __user
+#ifndef _LINUX_TYPES_H
+#define _LINUX_TYPES_H
+#include <linux/posix_types.h>
+#include <asm/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __kernel
-#define __safe
-#define __force
-#define __nocast
+#define __bitwise__
+#define __bitwise
+typedef __u16 __bitwise __le16;
+typedef __u16 __bitwise __be16;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __iomem
-#define __chk_user_ptr(x) (void)0
-#define __chk_io_ptr(x) (void)0
-// modified by cmjo for windows compiler {
-//#define __builtin_warning(x,y...) (1)
-#define __builtin_warning(x, ...) (1)
-// }
+typedef __u32 __bitwise __le32;
+typedef __u32 __bitwise __be32;
+#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+typedef __u64 __bitwise __le64;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __acquires(x)
-#define __releases(x)
-#define __acquire(x) (void)0
-#define __release(x) (void)0
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __cond_lock(x) (x)
+typedef __u64 __bitwise __be64;
 #endif
-#ifndef __attribute_const__
-#define __attribute_const__
+struct ustat {
+ __kernel_daddr_t f_tfree;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#endif
+ __kernel_ino_t f_tinode;
+ char f_fname[6];
+ char f_fpack[6];
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

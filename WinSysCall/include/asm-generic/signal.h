@@ -16,33 +16,30 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef __LINUX_COMPILER_H
-#define __LINUX_COMPILER_H
-#ifndef __ASSEMBLY__
-#define __user
+#ifndef __ASM_GENERIC_SIGNAL_H
+#define __ASM_GENERIC_SIGNAL_H
+#include <linux/compiler.h>
+#ifndef SIG_BLOCK
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __kernel
-#define __safe
-#define __force
-#define __nocast
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __iomem
-#define __chk_user_ptr(x) (void)0
-#define __chk_io_ptr(x) (void)0
-// modified by cmjo for windows compiler {
-//#define __builtin_warning(x,y...) (1)
-#define __builtin_warning(x, ...) (1)
-// }
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __acquires(x)
-#define __releases(x)
-#define __acquire(x) (void)0
-#define __release(x) (void)0
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __cond_lock(x) (x)
+#define SIG_BLOCK 0
 #endif
-#ifndef __attribute_const__
-#define __attribute_const__
+#ifndef SIG_UNBLOCK
+#define SIG_UNBLOCK 1
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#endif
+#ifndef SIG_SETMASK
+#define SIG_SETMASK 2
+#endif
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#ifndef __ASSEMBLY__
+typedef void __signalfn_t(int);
+typedef __signalfn_t __user *__sighandler_t;
+typedef void __restorefn_t(void);
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+typedef __restorefn_t __user *__sigrestore_t;
+#define SIG_DFL ((__force __sighandler_t)0)
+#define SIG_IGN ((__force __sighandler_t)1)
+#define SIG_ERR ((__force __sighandler_t)-1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif
 #endif

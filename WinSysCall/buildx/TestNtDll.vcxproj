@@ -38,13 +38,13 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
@@ -106,7 +106,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include</AdditionalIncludeDirectories>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,7 +125,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
@@ -145,7 +146,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
@@ -164,10 +165,13 @@
     <ClCompile Include="..\src\bionic\vfork.c" />
     <ClCompile Include="..\src\bionic\_exit_with_stack_teardown.c" />
     <ClCompile Include="..\src\bionic\__errno.c" />
+    <ClCompile Include="..\src\bionic\__get_tls.c" />
     <ClCompile Include="..\src\bionic\__set_errno.c" />
+    <ClCompile Include="..\src\bionic\__set_tls.c" />
     <ClCompile Include="..\src\dlfcn.c" />
     <ClCompile Include="..\src\kernel32.c" />
     <ClCompile Include="..\src\ntdll.c" />
+    <ClCompile Include="..\src\pthread.c" />
     <ClCompile Include="..\src\string\bcopy_wrapper.c" />
     <ClCompile Include="..\src\string\bzero_wrapper.c" />
     <ClCompile Include="..\src\string\memcmp_wrapper.c" />
@@ -191,15 +195,19 @@
     <ClCompile Include="..\src\syscalls\setgid.c" />
     <ClCompile Include="..\src\syscalls\setresgid.c" />
     <ClCompile Include="..\src\syscalls\setsid.c" />
+    <ClCompile Include="..\src\syscalls\tgkill.c" />
+    <ClCompile Include="..\src\syscalls\tkill.c" />
     <ClCompile Include="..\src\syscalls\wait4.c" />
     <ClCompile Include="..\src\syscalls\_exit.c" />
     <ClCompile Include="..\src\syscalls\_exit_thread.c" />
     <ClCompile Include="..\src\syscalls\_waitpid.c" />
     <ClCompile Include="..\src\syscalls\__brk.c" />
     <ClCompile Include="..\src\syscalls\__fork.c" />
+    <ClCompile Include="..\src\syscalls\__ptrace.c" />
     <ClCompile Include="..\src\syscalls\__setresuid.c" />
     <ClCompile Include="..\src\syscalls\__setreuid.c" />
     <ClCompile Include="..\src\syscalls\__setuid.c" />
+    <ClCompile Include="..\src\syscalls\__set_thread_area.c" />
     <ClCompile Include="..\src\syscalls\__sys_clone.c" />
     <ClCompile Include="..\src\syscalls\__waitid.c" />
     <ClCompile Include="..\src\test.c" />
@@ -207,13 +215,38 @@
   <ItemGroup>
     <ClInclude Include="..\include\asm-generic\errno-base.h" />
     <ClInclude Include="..\include\asm-generic\errno.h" />
+    <ClInclude Include="..\include\asm-generic\siginfo.h" />
+    <ClInclude Include="..\include\asm-generic\signal.h" />
     <ClInclude Include="..\include\asm\errno.h" />
+    <ClInclude Include="..\include\asm\ldt.h" />
+    <ClInclude Include="..\include\asm\page.h" />
+    <ClInclude Include="..\include\asm\page_32.h" />
+    <ClInclude Include="..\include\asm\posix_types.h" />
+    <ClInclude Include="..\include\asm\posix_types_32.h" />
+    <ClInclude Include="..\include\asm\ptrace-abi.h" />
+    <ClInclude Include="..\include\asm\ptrace.h" />
+    <ClInclude Include="..\include\asm\siginfo.h" />
+    <ClInclude Include="..\include\asm\signal.h" />
+    <ClInclude Include="..\include\asm\types.h" />
+    <ClInclude Include="..\include\asm\unistd.h" />
+    <ClInclude Include="..\include\asm\unistd_32.h" />
     <ClInclude Include="..\include\dlfcn.h" />
     <ClInclude Include="..\include\errno.h" />
     <ClInclude Include="..\include\kernel32.h" />
+    <ClInclude Include="..\include\limits.h" />
     <ClInclude Include="..\include\linux\compiler.h" />
     <ClInclude Include="..\include\linux\err.h" />
     <ClInclude Include="..\include\linux\errno.h" />
+    <ClInclude Include="..\include\linux\posix_types.h" />
+    <ClInclude Include="..\include\linux\ptrace.h" />
+    <ClInclude Include="..\include\linux\stddef.h" />
+    <ClInclude Include="..\include\linux\types.h" />
+    <ClInclude Include="..\include\linux\unistd.h" />
+    <ClInclude Include="..\include\machine\internal_types.h" />
+    <ClInclude Include="..\include\machine\kernel.h" />
+    <ClInclude Include="..\include\machine\limits.h" />
+    <ClInclude Include="..\include\machine\_types.h" />
+    <ClInclude Include="..\include\malloc.h" />
     <ClInclude Include="..\include\ntdll.h" />
     <ClInclude Include="..\include\ntstatus.h" />
     <ClInclude Include="..\include\nttypes.h" />
@@ -222,9 +255,23 @@
     <ClInclude Include="..\include\pshpack2.h" />
     <ClInclude Include="..\include\pshpack4.h" />
     <ClInclude Include="..\include\pshpack8.h" />
+    <ClInclude Include="..\include\pthread.h" />
+    <ClInclude Include="..\include\sched.h" />
+    <ClInclude Include="..\include\signal.h" />
+    <ClInclude Include="..\include\stddef.h" />
+    <ClInclude Include="..\include\stdint.h" />
+    <ClInclude Include="..\include\string.h" />
     <ClInclude Include="..\include\sys\cdefs.h" />
     <ClInclude Include="..\include\sys\cdefs_elf.h" />
+    <ClInclude Include="..\include\sys\limits.h" />
+    <ClInclude Include="..\include\sys\ptrace.h" />
+    <ClInclude Include="..\include\sys\syslimits.h" />
+    <ClInclude Include="..\include\sys\sysmacros.h" />
+    <ClInclude Include="..\include\sys\time.h" />
+    <ClInclude Include="..\include\sys\types.h" />
+    <ClInclude Include="..\include\sys\_types.h" />
     <ClInclude Include="..\include\test.h" />
+    <ClInclude Include="..\include\time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

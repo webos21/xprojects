@@ -14,8 +14,48 @@
  * limitations under the License.
  */
 
-#include <windows.h>
 #include <dlfcn.h>
+
+#define __in
+#define __out_opt
+
+#define FAR
+
+#define WINBASEAPI
+#define WINAPI      __stdcall
+
+typedef struct _HINSTANCE {
+	int unused;
+} *HINSTANCE;
+typedef HINSTANCE   HMODULE;
+
+typedef int         BOOL;
+typedef int        *(FAR WINAPI *FARPROC)();
+typedef const char *LPCSTR, *PCSTR;
+
+WINBASEAPI
+	__out_opt
+	HMODULE
+	WINAPI
+	LoadLibraryA(
+	__in LPCSTR lpLibFileName
+	);
+
+WINBASEAPI
+	BOOL
+	WINAPI
+	FreeLibrary (
+	__in HMODULE hLibModule
+	);
+
+WINBASEAPI
+	FARPROC
+	WINAPI
+	GetProcAddress (
+	__in HMODULE hModule,
+	__in LPCSTR lpProcName
+	);
+
 
 void *dlopen(const char*  filename, int flag) {
 	return LoadLibraryA(filename);

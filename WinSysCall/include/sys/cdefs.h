@@ -104,9 +104,11 @@
 #define	__const				/* delete pseudo-ANSI C keywords */
 #define	__inline
 #define	__signed
-#ifndef __volatile // added by cmjo
-#define	__volatile
+// modified by cmjo {
+#ifndef __volatile
+#define	__volatile volatile
 #endif // __volatile
+// }
 #endif	/* !__GNUC__ */
 
 /*
@@ -246,6 +248,7 @@
 #endif /* NO_KERNEL_RCSIDS */
 #endif /* _KERNEL */
 
+// modified by cmjo {
 #if 0 // added by cmjo
 #if !defined(_STANDALONE) && !defined(_KERNEL)
 #ifdef __GNUC__
@@ -260,7 +263,8 @@
 #else /* _STANDALONE || _KERNEL */
 #define	__RENAME(x)	no renaming in kernel or standalone environment
 #endif
-#endif // 0 : added by cmjo
+#endif
+// } 0 : added by cmjo
 
 /*
  * A barrier to stop the optimizer from moving code or assume live

@@ -16,33 +16,33 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef __LINUX_COMPILER_H
-#define __LINUX_COMPILER_H
+#ifndef _ASM_X86_LDT_H
+#define _ASM_X86_LDT_H
+#define LDT_ENTRIES 8192
+#define LDT_ENTRY_SIZE 8
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #ifndef __ASSEMBLY__
-#define __user
+struct user_desc {
+ unsigned int entry_number;
+ unsigned int base_addr;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __kernel
-#define __safe
-#define __force
-#define __nocast
+ unsigned int limit;
+ unsigned int seg_32bit:1;
+ unsigned int contents:2;
+ unsigned int read_exec_only:1;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __iomem
-#define __chk_user_ptr(x) (void)0
-#define __chk_io_ptr(x) (void)0
-// modified by cmjo for windows compiler {
-//#define __builtin_warning(x,y...) (1)
-#define __builtin_warning(x, ...) (1)
-// }
+ unsigned int limit_in_pages:1;
+ unsigned int seg_not_present:1;
+ unsigned int useable:1;
+#ifdef __x86_64__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __acquires(x)
-#define __releases(x)
-#define __acquire(x) (void)0
-#define __release(x) (void)0
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __cond_lock(x) (x)
+ unsigned int lm:1;
 #endif
-#ifndef __attribute_const__
-#define __attribute_const__
+};
+#define MODIFY_LDT_CONTENTS_DATA 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define MODIFY_LDT_CONTENTS_STACK 1
+#define MODIFY_LDT_CONTENTS_CODE 2
 #endif
 #endif
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

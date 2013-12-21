@@ -16,33 +16,29 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef __LINUX_COMPILER_H
-#define __LINUX_COMPILER_H
-#ifndef __ASSEMBLY__
-#define __user
+#ifndef _LINUX_POSIX_TYPES_H
+#define _LINUX_POSIX_TYPES_H
+#include <linux/stddef.h>
+#undef __NFDBITS
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __kernel
-#define __safe
-#define __force
-#define __nocast
+#define __NFDBITS (8 * sizeof(unsigned long))
+#undef __FD_SETSIZE
+#define __FD_SETSIZE 1024
+#undef __FDSET_LONGS
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __iomem
-#define __chk_user_ptr(x) (void)0
-#define __chk_io_ptr(x) (void)0
-// modified by cmjo for windows compiler {
-//#define __builtin_warning(x,y...) (1)
-#define __builtin_warning(x, ...) (1)
-// }
+#define __FDSET_LONGS (__FD_SETSIZE/__NFDBITS)
+#undef __FDELT
+#define __FDELT(d) ((d) / __NFDBITS)
+#undef __FDMASK
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __acquires(x)
-#define __releases(x)
-#define __acquire(x) (void)0
-#define __release(x) (void)0
+#define __FDMASK(d) (1UL << ((d) % __NFDBITS))
+typedef struct {
+ unsigned long fds_bits [__FDSET_LONGS];
+} __kernel_fd_set;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __cond_lock(x) (x)
-#endif
-#ifndef __attribute_const__
-#define __attribute_const__
+typedef void (*__kernel_sighandler_t)(int);
+typedef int __kernel_key_t;
+typedef int __kernel_mqd_t;
+#include <asm/posix_types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#endif
 #endif

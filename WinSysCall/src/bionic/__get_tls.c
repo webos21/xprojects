@@ -25,13 +25,13 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-#include <errno.h>
-
-#define TLS_SLOT_ERRNO 2
-
-extern void* __get_tls(void);
-
-volatile int*  __errno( void )
+/* see the implementation of __set_tls and pthread.c to understand this
+ * code. Basically, the content of gs:[0] always is a pointer to the base
+ * address of the tls region
+ */
+void*   __get_tls(void)
 {
-  return  &((volatile int*)__get_tls())[TLS_SLOT_ERRNO];
+  void*  tls = 0;
+//  asm ( "   movl  %%gs:0, %0" : "=r"(tls) );
+  return tls;
 }

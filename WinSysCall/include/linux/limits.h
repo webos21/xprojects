@@ -16,33 +16,25 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef __LINUX_COMPILER_H
-#define __LINUX_COMPILER_H
-#ifndef __ASSEMBLY__
-#define __user
+#ifndef _LINUX_LIMITS_H
+#define _LINUX_LIMITS_H
+#define NR_OPEN 1024
+#define NGROUPS_MAX 65536
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __kernel
-#define __safe
-#define __force
-#define __nocast
+#define ARG_MAX 131072
+#define CHILD_MAX 999
+#define OPEN_MAX 256
+#define LINK_MAX 127
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __iomem
-#define __chk_user_ptr(x) (void)0
-#define __chk_io_ptr(x) (void)0
-// modified by cmjo for windows compiler {
-//#define __builtin_warning(x,y...) (1)
-#define __builtin_warning(x, ...) (1)
-// }
+#define MAX_CANON 255
+#define MAX_INPUT 255
+#define NAME_MAX 255
+#define PATH_MAX 4096
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __acquires(x)
-#define __releases(x)
-#define __acquire(x) (void)0
-#define __release(x) (void)0
+#define PIPE_BUF 4096
+#define XATTR_NAME_MAX 255
+#define XATTR_SIZE_MAX 65536
+#define XATTR_LIST_MAX 65536
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define __cond_lock(x) (x)
-#endif
-#ifndef __attribute_const__
-#define __attribute_const__
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#endif
+#define RTSIG_MAX 32
 #endif

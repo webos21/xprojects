@@ -25,13 +25,21 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-#include <errno.h>
+#ifndef _SYS_PTRACE_H_
+#define _SYS_PTRACE_H_
 
-#define TLS_SLOT_ERRNO 2
+#include <sys/cdefs.h>
+#include <sys/types.h>
+/* For all of the defines */
+#include <linux/ptrace.h>
 
-extern void* __get_tls(void);
+__BEGIN_DECLS
 
-volatile int*  __errno( void )
-{
-  return  &((volatile int*)__get_tls())[TLS_SLOT_ERRNO];
-}
+#define PTRACE_POKEUSER     PTRACE_POKEUSR
+#define PTRACE_PEEKUSER     PTRACE_PEEKUSR
+
+extern long ptrace(int request, pid_t pid, void *addr, void *data);
+
+__END_DECLS
+
+#endif /* _SYS_PTRACE_H_ */

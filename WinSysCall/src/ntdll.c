@@ -54,6 +54,12 @@ ntsc_t *ntdll_getFP() {
 
 
 		/////////////////////
+		// ProcMon(Stack Trace) Functions
+		/////////////////////
+
+
+
+		/////////////////////
 		// Memory Functions
 		/////////////////////
 

@@ -122,7 +122,7 @@ int execve(const char *filename, char *const argv[], char *const envp[]) {
 		// execve will not return, just exit
 		ntfp->FP_NtWaitForSingleObject(pinfo.ProcessHandle, FALSE, NULL);
 		ntfp->FP_NtQueryInformationProcess(pinfo.ProcessHandle, ProcessBasicInformation, &pbi, sizeof(pbi), NULL);
-		exeRet = pbi.ExitStatus;
+		exeRet = (int) pbi.ExitStatus;
 		errno = 0;
 	}
 

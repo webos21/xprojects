@@ -16,6 +16,17 @@
 
 #include "test.h"
 
+int test_peb() {
+	ntsc_t *ntfp = ntdll_getFP();
+	PPEB_VISTA_7 x = ntfp->FP_RtlGetCurrentPeb();
+	return 0;
+}
+
+int test_teb() {
+//	PTEB_7 x = NtCurrentTeb();
+	return 0;
+}
+
 void tsleep(int msec) {
 	LARGE_INTEGER x;
 	ntsc_t *ntfp = ntdll_getFP();
@@ -82,6 +93,7 @@ int test_execve() {
 	char *const argv[] = {"C:\\Windows\\System32\\cmd.exe", "/?", NULL};
 	char *const envp[] = {"TEST=1", "LD_DIR=2", NULL};
 	ret = execve("C:\\Windows\\System32\\cmd.exe", argv, envp);
+	return ret;
 }
 
 int test_gettid() {
@@ -100,13 +112,14 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int x = 0;
 
+	test_peb();
 	//test_fork();
 	//test__pthread_clone();
 	//test__bionic_clone();
 	//Sleep(1000);
 	//test_execve();
 	//test_gettid();
-	test_getppid();
+	//test_getppid();
 
 	return 0;
 }
