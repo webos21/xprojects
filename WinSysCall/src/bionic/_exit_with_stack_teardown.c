@@ -21,7 +21,7 @@ void _exit_with_stack_teardown(void *stackBase, int stackSize, int *retCode) {
 	int status = (*retCode);
 	ntsc_t *ntfp = ntdll_getFP();
 
-	ntfp->FP_NtFreeVirtualMemory(NtCurrentProcess(), &stackBase, (PSIZE_T)&stackSize, 0);
+	ntfp->FP_NtFreeVirtualMemory(XbNtCurrentProcess(), &stackBase, (PSIZE_T)&stackSize, 0);
 	errno = status;
 	ntfp->FP_RtlExitUserThread(status);
 }

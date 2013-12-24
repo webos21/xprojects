@@ -35,3 +35,13 @@ volatile int*  __errno( void )
 {
   return  &((volatile int*)__get_tls())[TLS_SLOT_ERRNO];
 }
+
+// added by cmjo : avoid the name mangling error!!!!
+// {{{
+#if defined(__MINGW32__) || defined(__MINGW64__)
+volatile int*  _imp___errno( void )
+{
+	return  &((volatile int*)__get_tls())[TLS_SLOT_ERRNO];
+}
+#endif
+// }}}

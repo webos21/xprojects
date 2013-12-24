@@ -244,6 +244,10 @@ typedef LONG               KPRIORITY;
 
 typedef void              *HDC;
 
+typedef unsigned long long ULONG64, *PULONG64;
+typedef unsigned long long DWORD64, *PDWORD64;
+
+
 
 //////////////////////////////////////////
 // Structured Types

@@ -1177,18 +1177,46 @@ typedef struct _st_ntsc {
 // Macro for NTDLL APIs
 //////////////////////////////////////////
 
-#define NtCurrentProcess() ( (HANDLE)(LONG_PTR) -1 )
-#define NtCurrentThread()  ( (HANDLE)(LONG_PTR) -2 )
-#define ZwCurrentProcess() NtCurrentProcess()
-#define ZwCurrentThread()  NtCurrentThread()
+#define XbNtCurrentProcess() ( (HANDLE)(LONG_PTR) -1 )
+#define XbNtCurrentThread()  ( (HANDLE)(LONG_PTR) -2 )
+#define XbZwCurrentProcess() XbNtCurrentProcess()
+#define XbZwCurrentThread()  XbNtCurrentThread()
 
 /* FIXME? Windows NT's ntdll doesn't export RtlGetProcessHeap() */
 //#define RtlGetProcessHeap() ((HANDLE)NtCurrentPeb()->ProcessHeap)
-#define DRtlGetProcessHeap(pFP) ((HANDLE)((pFP)->FP_RtlGetCurrentPeb()->ProcessHeap))
+#define XbRtlGetProcessHeap(pFP) ((HANDLE)((pFP)->FP_RtlGetCurrentPeb()->ProcessHeap))
 
-#ifndef NtCurrentTeb
-PTEB_7 NtCurrentTeb(void);
-#endif
+#ifdef _MSC_VER
+#ifdef _WIN64
+#define FIELD_OFFSET(type, field)    ((LONG)(LONG_PTR)&(((type *)0)->field))
+DWORD64 Xb__readgsqword (__in DWORD Offset);
+__forceinline PTEB_7 XbNtCurrentTeb(void) {
+	return (PTEB_7)Xb__readgsqword(FIELD_OFFSET(NT_TIB, Self));
+}
+#else  // !_WIN64
+#define PcTeb 0x18
+__forceinline PTEB_7 XbNtCurrentTeb(void) {
+	__asm mov eax, fs:[PcTeb]
+}
+#endif // _WIN64
+#else  // !_MSC_VER
+#ifdef _WIN64
+#define PcTeb 0x30
+inline __attribute__((always_inline)) static PTEB_7 XbNtCurrentTeb(void) {
+	PTEB_7 _teb = NULL;
+	__asm__ __volatile__("movl %%fs:$PcTeb, %k[_teb]" : [_teb] "=r" (_teb));
+	return _teb;
+}
+#else  // !_WIN64
+#define PcTeb 0x18
+inline __attribute__((always_inline)) static PTEB_7 XbNtCurrentTeb(void) {
+	PTEB_7 _teb = NULL;
+	__asm__ __volatile__("movl %%fs:$PcTeb, %k[_teb]" : [_teb] "=r" (_teb));
+	return _teb;
+}
+#endif // _WIN64
+#endif // _MSC_VER
+
 
 //////////////////////////////////////////
 // Function for getting structure-pointer

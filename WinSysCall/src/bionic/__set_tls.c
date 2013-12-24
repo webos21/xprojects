@@ -71,7 +71,8 @@ struct _thread_area_head {
  */
 int __set_tls(void *ptr)
 {
-    int   rc, segment;
+    int   rc;
+	//int   segment;
 
     pthread_mutex_lock(&_tls_desc_lock);
     _tls_desc.base_addr = (unsigned long)ptr;

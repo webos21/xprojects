@@ -25,7 +25,7 @@ int  __pthread_clone(void* (*fn)(void*), void* tls, int flags, void* arg)
 	NTSTATUS status;
 	ntsc_t *ntfp = ntdll_getFP();
 
-	status = ntfp->FP_RtlCreateUserThread(NtCurrentProcess(),NULL,FALSE,0,0,0,fn,arg,&hThd,&cid);
+	status = ntfp->FP_RtlCreateUserThread(XbNtCurrentProcess(),NULL,FALSE,0,0,0,fn,arg,&hThd,&cid);
 	if (status == 0) {
 		return (int) cid.UniqueThread;
 	} else {
@@ -48,7 +48,7 @@ static void *__bionic_clone_fn(void *args) {
 	void *rargs = xargs->args;
 
 	ntsc_t *ntfp = ntdll_getFP();
-	ntfp->FP_RtlFreeHeap(DRtlGetProcessHeap(ntfp), 0, args);
+	ntfp->FP_RtlFreeHeap(XbRtlGetProcessHeap(ntfp), 0, args);
 	
 	__bionic_clone_entry(rfunc, rargs);
 	return NULL;
@@ -79,11 +79,11 @@ int  __bionic_clone(unsigned long clone_flags,
 
 	ntsc_t *ntfp = ntdll_getFP();
 
-	xargs = ntfp->FP_RtlAllocateHeap(DRtlGetProcessHeap(ntfp), 0, sizeof(__bionic_clone_args));
+	xargs = ntfp->FP_RtlAllocateHeap(XbRtlGetProcessHeap(ntfp), 0, sizeof(__bionic_clone_args));
 	xargs->fn = fn;
 	xargs->args = arg;
 
-	status = ntfp->FP_RtlCreateUserThread(NtCurrentProcess(),NULL,FALSE,0,0,0,&__bionic_clone_fn,xargs,&hThd,&cid);
+	status = ntfp->FP_RtlCreateUserThread(XbNtCurrentProcess(),NULL,FALSE,0,0,0,&__bionic_clone_fn,xargs,&hThd,&cid);
 	if (status == 0) {
 		return (int) cid.UniqueThread;
 	} else {

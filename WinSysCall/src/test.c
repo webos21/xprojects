@@ -22,7 +22,10 @@ int test_peb() {
 	return 0;
 }
 
+extern PTEB_7 NtCurrentTeb();
+
 int test_teb() {
+	PTEB_7 x = XbNtCurrentTeb();
 //	PTEB_7 x = NtCurrentTeb();
 	return 0;
 }
@@ -113,6 +116,7 @@ int main(int argc, char *argv[]) {
 	int x = 0;
 
 	test_peb();
+	test_teb();
 	//test_fork();
 	//test__pthread_clone();
 	//test__bionic_clone();

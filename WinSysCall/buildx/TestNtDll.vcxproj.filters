@@ -374,5 +374,16 @@
     <ClInclude Include="..\include\malloc.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\linux\limits.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\linux\time.h">
+      <Filter>include\linux</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\src\syscalls\__readgsqword.asm">
+      <Filter>src\syscalls</Filter>
+    </MASM>
   </ItemGroup>
 </Project>
