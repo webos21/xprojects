@@ -249,7 +249,7 @@
 #endif /* _KERNEL */
 
 // modified by cmjo {
-#if 0 // added by cmjo
+#if 0
 #if !defined(_STANDALONE) && !defined(_KERNEL)
 #ifdef __GNUC__
 #define	__RENAME(x)	___RENAME(x)
@@ -264,7 +264,7 @@
 #define	__RENAME(x)	no renaming in kernel or standalone environment
 #endif
 #endif
-// } 0 : added by cmjo
+// }
 
 /*
  * A barrier to stop the optimizer from moving code or assume live

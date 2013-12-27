@@ -123,7 +123,7 @@
 #define	__IDSTRING(_n,_s)		__SECTIONSTRING(.ident,_s)
 
 // modified by cmjo {
-#ifndef _WIN32 // added by cmjo
+#ifndef _WIN32
 #define	__RCSID(_s)			__IDSTRING(rcsid,_s)
 #else
 #define	__RCSID(_s)
