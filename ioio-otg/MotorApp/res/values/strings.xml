@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MotorApp</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="IOIOConnected">IOIO-OTG is connected</string>
+    <string name="IOIODisconnected">IOIO-OTG is disconnected</string>
+
+</resources>
