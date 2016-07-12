@@ -1,0 +1,17 @@
+
+apply plugin: 'java'
+
+compileJava {
+    sourceCompatibility = 1.5
+    targetCompatibility = 1.5
+}
+
+dependencies {
+    compile project(':core')
+    testCompile 'junit:junit:4.12'
+    compile 'com.sparetimelabs:purejavacomm:0.0.22'
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}

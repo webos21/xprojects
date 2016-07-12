@@ -1,0 +1,17 @@
+
+
+println "org.gradle.java.home = "+ project.properties['org.gradle.java.home']
+
+allprojects {
+    project.group = 'com.gmail.webos21.ioio'
+    project.version = '1.0.0'
+
+    repositories {
+        jcenter()
+        maven { url "http://www.sparetimelabs.com/maven2" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
