@@ -11,7 +11,7 @@ public enum KeypadButton {
     /* Indent */ SEVEN("7", KeypadButtonCategory.NUMBER),
     /* Indent */ EIGHT("8", KeypadButtonCategory.NUMBER),
     /* Indent */ NINE("9", KeypadButtonCategory.NUMBER),
-    /* Indent */ BACKSPACE("<-", KeypadButtonCategory.CLEAR),
+    /* Indent */ BACKSPACE("\u2190", KeypadButtonCategory.OPERATOR),
     /* Indent */ DUMMY("", KeypadButtonCategory.DUMMY);
 
     CharSequence mText; // Display Text

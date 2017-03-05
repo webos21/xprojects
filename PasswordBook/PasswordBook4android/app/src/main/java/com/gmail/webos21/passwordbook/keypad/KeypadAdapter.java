@@ -1,6 +1,7 @@
 package com.gmail.webos21.passwordbook.keypad;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -49,32 +50,27 @@ public class KeypadAdapter extends BaseAdapter {
 
         if (convertView == null) { // if it's not recycled, initialize some attributes
             btn = new Button(mContext);
+            if (Build.VERSION.SDK_INT < 23) {
+                btn.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
+            } else {
+                btn.setTextAppearance(android.R.style.TextAppearance_Large);
+            }
+
             KeypadButton keypadButton = mButtons[position];
 
             switch (keypadButton.mCategory) {
-                case MEMORYBUFFER:
-                    btn.setBackgroundResource(R.drawable.keypadmembuffer1);
-                    break;
-                case CLEAR:
-                    btn.setBackgroundResource(R.drawable.keypadclear1);
-                    break;
                 case NUMBER:
-                    btn.setBackgroundResource(R.drawable.keypad1);
+                    btn.setBackgroundResource(android.R.drawable.btn_default);
                     break;
                 case OPERATOR:
-                    btn.setBackgroundResource(R.drawable.keypadop1);
-                    break;
-                case OTHER:
-                    btn.setBackgroundResource(R.drawable.keypadother1);
-                    break;
-                case RESULT:
-                    btn.setBackgroundResource(R.drawable.keypadresult1);
+                    btn.setBackgroundResource(android.R.drawable.btn_default);
                     break;
                 case DUMMY:
-                    btn.setBackgroundResource(R.drawable.appvertical1);
+                    btn.setBackgroundResource(android.R.drawable.btn_default);
+                    btn.setEnabled(false);
                     break;
                 default:
-                    btn.setBackgroundResource(R.drawable.keypad1);
+                    btn.setBackgroundResource(android.R.drawable.btn_default);
                     break;
             }
 
