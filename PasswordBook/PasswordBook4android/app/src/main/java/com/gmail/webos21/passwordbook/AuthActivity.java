@@ -1,9 +1,13 @@
 package com.gmail.webos21.passwordbook;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -12,6 +16,10 @@ import com.gmail.webos21.passwordbook.keypad.KeypadAdapter;
 import com.gmail.webos21.passwordbook.keypad.KeypadButton;
 
 public class AuthActivity extends AppCompatActivity {
+
+    private static final String PASS_KEY = "0000";
+
+    private View layoutView;
 
     private TextView tvPass1;
     private TextView tvPass2;
@@ -29,6 +37,8 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        layoutView = findViewById(R.id.activity_auth);
 
         tvPass1 = (TextView) findViewById(R.id.tvPass1);
         tvPass2 = (TextView) findViewById(R.id.tvPass2);
@@ -63,6 +73,9 @@ public class AuthActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        inputPass = "";
+        ShowInputView();
+
         super.onStop();
     }
 
@@ -100,6 +113,8 @@ public class AuthActivity extends AppCompatActivity {
                 tvPass2.setText("*");
                 tvPass3.setText("*");
                 tvPass4.setText("*");
+
+                layoutView.post(new CheckPasswordRunnable(layoutView));
                 break;
             default:
                 break;
@@ -126,6 +141,29 @@ public class AuthActivity extends AppCompatActivity {
         if (ipLen < 4) {
             inputPass += keypadButton.getText();
             ShowInputView();
+        }
+    }
+
+    private class CheckPasswordRunnable implements Runnable {
+
+        private View targetView;
+
+        public CheckPasswordRunnable(View v) {
+            this.targetView = v;
+        }
+
+        @Override
+        public void run() {
+            if (PASS_KEY.equals(inputPass)) {
+                Intent i = new Intent();
+                setResult(Activity.RESULT_OK, i);
+                finish();
+            } else {
+                Animation shake = AnimationUtils.loadAnimation(targetView.getContext(), R.anim.shake);
+                targetView.startAnimation(shake);
+                inputPass = "";
+                ShowInputView();
+            }
         }
     }
 
