@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 27
     }
 
     buildTypes {
@@ -14,6 +14,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
     externalNativeBuild {
         ndkBuild {
             path '../app/src/main/cpp/Android.mk'
