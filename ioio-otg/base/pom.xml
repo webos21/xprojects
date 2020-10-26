@@ -69,7 +69,7 @@
 		<version.sparetimelabs.purejavacomm>0.0.22</version.sparetimelabs.purejavacomm>
 
 		<!-- Version : JUnit -->
-		<version.junit>4.11</version.junit>
+		<version.junit>4.13.1</version.junit>
 
 	</properties>
 
